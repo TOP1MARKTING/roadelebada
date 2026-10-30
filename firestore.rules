@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidQuote() {
+      return request.resource.data.keys().hasAll([
+          'id', 'name', 'phone', 'business', 'service', 'details', 'status', 'createdAt', 'source'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() >= 8
+        && request.resource.data.phone.size() <= 20
+        && request.resource.data.details is string
+        && request.resource.data.details.size() <= 5000
+        && request.resource.data.source == 'form'
+        && request.resource.data.status == 'new';
+    }
+
+    function isValidMessage() {
+      return request.resource.data.keys().hasAll([
+          'id', 'name', 'phone', 'subject', 'message', 'createdAt', 'read', 'source'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.message is string
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.source == 'form'
+        && request.resource.data.read == false;
+    }
+
+    // Company phone, WhatsApp, address, socials, maps…
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Services + details (title, short, detail, examples…)
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /portfolio/{itemId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Staff list (includes demo passwords — auth required)
+    match /staff/{staffId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Quote requests from the public form
+    match /quotes/{quoteId} {
+      allow create: if isValidQuote();
+      allow read, update, delete: if isSignedIn();
+    }
+
+    // Contact messages from the public form
+    match /messages/{messageId} {
+      allow create: if isValidMessage();
+      allow read, update, delete: if isSignedIn();
+    }
+  }
+}
