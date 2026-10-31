@@ -22,7 +22,6 @@ import { Field } from "@/components/site/Field";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   ImagePicker,
@@ -233,8 +232,6 @@ function ServicesAdmin() {
           </button>
         }
       />
-      <DemoNote>{t("admin.common.demoStoreNote")}</DemoNote>
-
       <Card bodyClassName="p-0">
         <div className="flex flex-col gap-3 border-b p-4 sm:flex-row sm:items-center">
           <SearchInput
@@ -399,7 +396,6 @@ function ServicesAdmin() {
         onClose={() => setModalOpen(false)}
         size="lg"
         title={editing ? t("admin.services.editTitle") : t("admin.services.addTitle")}
-        description={t("admin.common.demoStoreNote")}
         footer={
           <>
             <button

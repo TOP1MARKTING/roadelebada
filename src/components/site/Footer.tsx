@@ -24,10 +24,10 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer className="relative overflow-hidden bg-dark text-white/75">
+    <footer className="relative overflow-hidden bg-dark pb-20 text-white/75 sm:pb-0">
       <div className="texture-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden />
       <div className="container-x relative grid gap-8 py-10 sm:gap-12 sm:py-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-        <div className="flex w-full min-w-0 flex-col lg:col-span-4">
+        <div className="flex w-full min-w-0 flex-col pe-14 sm:pe-0 lg:col-span-4">
           <Link to="/" aria-label={t("nav.home")} className="inline-flex w-full max-w-full">
             <Logo className="w-full" />
           </Link>

@@ -33,7 +33,6 @@ import { cn } from "@/lib/utils";
 import {
   Card,
   DemoBadge,
-  DemoNote,
   PageHeader,
   QuoteStatusBadge,
   td,
@@ -158,8 +157,6 @@ function DashboardPage() {
         subtitle={t("admin.dash.subtitle")}
         actions={<DemoBadge />}
       />
-      <DemoNote>{t("admin.dash.demoNote")}</DemoNote>
-
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {stats.map((s) => (
           <Link

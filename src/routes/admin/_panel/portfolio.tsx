@@ -20,7 +20,6 @@ import { Field } from "@/components/site/Field";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   ImagePicker,
@@ -181,10 +180,6 @@ function PortfolioAdmin() {
           </button>
         }
       />
-      <DemoNote>
-        {t("admin.common.demoStoreNote")} {t("admin.portfolio.sampleNote")}
-      </DemoNote>
-
       <Card bodyClassName="p-0">
         <div className="flex flex-col gap-3 border-b p-4 lg:flex-row lg:items-center">
           <SearchInput
@@ -326,7 +321,6 @@ function PortfolioAdmin() {
         onClose={() => setModalOpen(false)}
         size="lg"
         title={editing ? t("admin.portfolio.editTitle") : t("admin.portfolio.addTitle")}
-        description={t("admin.common.demoStoreNote")}
         footer={
           <>
             <button

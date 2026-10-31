@@ -9,7 +9,6 @@ import { matches } from "@/lib/admin-search";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   PageHeader,
@@ -53,8 +52,6 @@ function BlogAdminList() {
           </Link>
         }
       />
-      <DemoNote className="mb-5">{t("admin.blog.demoNote")}</DemoNote>
-
       <Card
         title={t("admin.blog.listTitle")}
         action={<SearchInput value={q} onChange={setQ} placeholder={t("admin.searchPlaceholder")} />}

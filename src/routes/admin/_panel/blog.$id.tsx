@@ -14,7 +14,7 @@ import {
 import { useAppData } from "@/store/app-data";
 import { cn } from "@/lib/utils";
 import { Field } from "@/components/site/Field";
-import { Card, DemoNote, ImagePicker, PageHeader, Switch } from "@/components/admin/ui";
+import { Card, ImagePicker, PageHeader, Switch } from "@/components/admin/ui";
 import { useDocumentTitle } from "@/components/site/useDocumentTitle";
 import { PermissionGate } from "@/components/admin/PermissionGate";
 
@@ -319,8 +319,6 @@ function BlogEditorPage() {
           </div>
         }
       />
-      <DemoNote className="mb-5">{t("admin.blog.demoNote")}</DemoNote>
-
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="space-y-5">
           <Card title={t("admin.blog.basics")}>

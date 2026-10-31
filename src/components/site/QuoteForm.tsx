@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "@tanstack/react-router";
-import { AlertCircle, CheckCircle2, Info, Loader2, RotateCcw, Send } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, RotateCcw, Send } from "lucide-react";
 import { useLang } from "@/i18n";
 import { useAppData, visibleServices } from "@/store/app-data";
 import { isValidEmail, isValidSaudiMobile, normalizePhone } from "@/lib/validation";
@@ -159,11 +159,6 @@ export function QuoteForm({ initialService }: { initialService?: string }) {
       noValidate
       className="rounded-2xl border bg-card p-6 shadow-soft sm:p-8"
     >
-      <div className="mb-6 flex items-start gap-3 rounded-xl border border-gold/40 bg-gold-soft/40 p-4 text-sm leading-6 text-navy">
-        <Info className="mt-0.5 size-4 shrink-0 text-gold-strong" />
-        <p>{t("quote.demoNote")}</p>
-      </div>
-
       {status === "error" && errorCount > 0 && (
         <div
           role="alert"

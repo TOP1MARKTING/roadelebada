@@ -434,21 +434,23 @@ export function ContactStrip() {
     },
   ];
   return (
-    <section className="pb-16 sm:pb-20">
-      <div className="container-x grid gap-4 md:grid-cols-3">
+    <section className="pb-20 sm:pb-20">
+      <div className="container-x grid gap-3 sm:gap-4 md:grid-cols-3">
         {items.map((it) => (
           <a
             key={it.label}
             href={it.href}
             {...(it.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className="group flex items-center gap-4 rounded-3xl border bg-white p-5 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-lift"
+            className="group flex min-w-0 items-start gap-3 rounded-2xl border bg-white p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-lift sm:items-center sm:gap-4 sm:rounded-3xl sm:p-5"
           >
-            <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong transition group-hover:bg-gold group-hover:text-white">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong transition group-hover:bg-gold group-hover:text-white sm:size-12">
               <it.icon className="size-5" />
             </span>
-            <span className="min-w-0">
+            <span className="min-w-0 flex-1">
               <span className="block text-xs font-semibold text-muted-foreground">{it.label}</span>
-              <span className="mt-1 block truncate font-semibold text-navy group-hover:text-gold-strong">{it.value}</span>
+              <span className="mt-1 block break-words text-[0.95rem] font-semibold leading-6 text-navy group-hover:text-gold-strong sm:text-base sm:leading-7">
+                {it.value}
+              </span>
             </span>
           </a>
         ))}

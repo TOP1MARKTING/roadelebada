@@ -9,7 +9,6 @@ import { isValidUrl } from "@/lib/validation";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   ImagePicker,
   PageHeader,
 } from "@/components/admin/ui";
@@ -96,8 +95,6 @@ function SettingsAdmin() {
           </>
         }
       />
-      <DemoNote>{t("admin.settings.demoNote")}</DemoNote>
-
       <Card title="Firebase">
         <div className="space-y-3 text-sm">
           <p>

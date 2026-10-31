@@ -283,8 +283,8 @@ export const dict: Record<string, { ar: string; en: string }> = {
   },
   "privacy.s1t": { ar: "البيانات التي نجمعها", en: "Data we collect" },
   "privacy.s1": {
-    ar: "لا يقوم هذا الموقع حاليًا بجمع أو تخزين بيانات شخصية على أي خادم. النماذج الموجودة في الموقع تجريبية لأغراض العرض ولا تُرسل البيانات المدخلة فيها إلى أي جهة خارجية.",
-    en: "This website currently does not collect or store personal data on any server. The forms on the site are demonstration purposes only and the entered data is not sent to any external party.",
+    ar: "عند استخدام نماذج التواصل أو طلب عرض السعر، نجمع البيانات التي تدخلها طوعًا (مثل الاسم ورقم الجوال وتفاصيل الطلب) لمعالجة طلبك والرد عليك.",
+    en: "When you use the contact or quote forms, we collect the data you voluntarily enter (such as name, phone number and request details) to process your request and respond to you.",
   },
   "privacy.s2t": { ar: "استخدام البيانات", en: "Use of data" },
   "privacy.s2": {
@@ -341,12 +341,12 @@ export const dict: Record<string, { ar: string; en: string }> = {
   "admin.loggingIn": { ar: "جارٍ تسجيل الدخول...", en: "Signing in..." },
   "admin.invalidCredentials": { ar: "بيانات الدخول غير صحيحة", en: "Invalid credentials" },
   "admin.demoHint": {
-    ar: "بيانات دخول تجريبية للعرض: admin@demo.local / Demo123!",
-    en: "Demo credentials for preview: admin@demo.local / Demo123!",
+    ar: "بيانات الدخول: admin@roadelebada.com / Demo123!",
+    en: "Sign-in: admin@roadelebada.com / Demo123!",
   },
   "admin.demoAuthNote": {
-    ar: "هذه الواجهة عرض توضيحي: لا يوجد توثيق حقيقي أو اتصال بأي خادم.",
-    en: "This interface is a demo: there is no real authentication or server connection.",
+    ar: "الدخول عبر Firebase Authentication، والبيانات تُحفظ في Firestore.",
+    en: "Sign-in uses Firebase Authentication; data is stored in Firestore.",
   },
   "admin.logout": { ar: "تسجيل الخروج", en: "Sign out" },
 
@@ -818,8 +818,8 @@ export const dict: Record<string, { ar: string; en: string }> = {
     en: "Manage site content from one place",
   },
   "admin.loginSub": {
-    ar: "واجهة تجريبية لإدارة الخدمات والأعمال والطلبات — تُحفظ البيانات في متصفحك فقط.",
-    en: "A demo interface for managing services, work and requests — data stays in your browser only.",
+    ar: "إدارة الخدمات والأعمال والطلبات والرسائل من لوحة واحدة مرتبطة بـ Firebase.",
+    en: "Manage services, portfolio, quotes and messages from one Firebase-backed dashboard.",
   },
   "admin.backToSite": { ar: "العودة للموقع", en: "Back to site" },
   "admin.demoBoxTitle": { ar: "بيانات الدخول التجريبية", en: "Demo credentials" },
@@ -851,8 +851,8 @@ export const dict: Record<string, { ar: string; en: string }> = {
 
   "admin.common.clearSearch": { ar: "مسح البحث", en: "Clear search" },
   "admin.common.savedLocally": {
-    ar: "تم الحفظ في متصفحك فقط (localStorage).",
-    en: "Saved in your browser only (localStorage).",
+    ar: "تم الحفظ على Firebase.",
+    en: "Saved to Firebase.",
   },
   "admin.common.resultsCount": { ar: "{n} نتيجة", en: "{n} results" },
   "admin.common.clearFilters": { ar: "مسح عوامل التصفية", en: "Clear filters" },

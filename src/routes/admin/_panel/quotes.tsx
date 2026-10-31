@@ -13,7 +13,6 @@ import { WhatsAppIcon } from "@/components/site/SocialIcon";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   PageHeader,
@@ -86,7 +85,6 @@ function QuotesAdmin() {
   return (
     <div className="space-y-5">
       <PageHeader title={t("admin.quotes.title")} subtitle={t("admin.quotes.subtitle")} />
-      <DemoNote>{t("admin.quotes.demoNote")}</DemoNote>
 
       <Card bodyClassName="p-0">
         <div className="space-y-3 border-b p-4">
@@ -325,7 +323,6 @@ function QuotesAdmin() {
                 </div>
               </div>
             </div>
-            {viewing.source === "demo" && <DemoNote>{t("admin.quotes.sampleEntry")}</DemoNote>}
           </div>
         )}
       </Modal>

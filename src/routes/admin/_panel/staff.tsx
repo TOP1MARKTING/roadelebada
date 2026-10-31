@@ -18,7 +18,6 @@ import { Field } from "@/components/site/Field";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   PageHeader,
@@ -164,8 +163,6 @@ function StaffAdminPage() {
           </button>
         }
       />
-      <DemoNote className="mb-5">{t("admin.staff.demoNote")}</DemoNote>
-
       <Card
         title={t("admin.staff.listTitle")}
         action={<SearchInput value={q} onChange={setQ} placeholder={t("admin.searchPlaceholder")} />}

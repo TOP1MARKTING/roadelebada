@@ -141,8 +141,7 @@ export function ContactForm() {
           />
         </Field>
       </fieldset>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-5 text-muted-foreground">{t("quote.demoNote")}</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
         <button type="submit" disabled={loading} className="btn btn-navy shrink-0">
           {loading ? (
             <Loader2 className="size-4 animate-spin" />

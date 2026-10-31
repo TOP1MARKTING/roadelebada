@@ -8,7 +8,7 @@ import { defaultCompany, useAppData, type CompanySettings } from "@/store/app-da
 import { isValidPhoneLoose, isValidUrl, normalizePhone } from "@/lib/validation";
 import { Field } from "@/components/site/Field";
 import { SocialIcon, socialLabels } from "@/components/site/SocialIcon";
-import { Card, ConfirmDialog, DemoNote, ImagePicker, PageHeader } from "@/components/admin/ui";
+import { Card, ConfirmDialog, ImagePicker, PageHeader } from "@/components/admin/ui";
 import { useDocumentTitle } from "@/components/site/useDocumentTitle";
 
 export const Route = createFileRoute("/admin/_panel/company")({
@@ -123,8 +123,6 @@ function CompanyAdmin() {
           </>
         }
       />
-      <DemoNote>{t("admin.company.demoNote")}</DemoNote>
-
       <div className="space-y-5">
         <Card title={t("admin.company.identity")}>
           <div className="grid gap-5 sm:grid-cols-2">

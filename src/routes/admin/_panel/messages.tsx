@@ -13,7 +13,6 @@ import { WhatsAppIcon } from "@/components/site/SocialIcon";
 import {
   Card,
   ConfirmDialog,
-  DemoNote,
   EmptyState,
   IconButton,
   PageHeader,
@@ -92,8 +91,6 @@ function MessagesAdmin() {
           )
         }
       />
-      <DemoNote>{t("admin.messages.demoNote")}</DemoNote>
-
       <Card bodyClassName="p-0">
         <div className="flex flex-col gap-3 border-b p-4 sm:flex-row sm:items-center">
           <SearchInput
@@ -305,7 +302,6 @@ function MessagesAdmin() {
                 {t("common.whatsapp")}
               </a>
             </div>
-            {viewing.source === "demo" && <DemoNote>{t("admin.quotes.sampleEntry")}</DemoNote>}
           </div>
         )}
       </Modal>
