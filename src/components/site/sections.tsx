@@ -1,8 +1,11 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ArrowRight,
   Check,
+  ChevronsLeft,
+  ChevronsRight,
   Gem,
   HeartHandshake,
   Layers,
@@ -26,6 +29,7 @@ import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { SmartImage } from "./SmartImage";
 import { WhatsAppIcon } from "./SocialIcon";
+import { useWhatsAppOrder } from "./WhatsAppOrder";
 
 /* ------------------------------------------------------------ About intro */
 
@@ -237,6 +241,7 @@ export function CtaBand({
 }) {
   const { t, dir } = useLang();
   const company = useCompany();
+  const { openOrder } = useWhatsAppOrder();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   return (
     <section className="py-16 sm:py-20">
@@ -260,10 +265,10 @@ export function CtaBand({
               <p className="mt-4 leading-8 text-white/75">{description ?? t("home.ctaDesc")}</p>
             </div>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <Link to="/quote" search={service ? { service } : {}} className="btn btn-gold">
+              <button type="button" onClick={() => openOrder(service)} className="btn btn-gold">
                 {cta ?? t("common.requestQuote")}
                 <Arrow className="size-4" />
-              </Link>
+              </button>
               <a href={company.wa(t("common.waGreeting"))} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
                 <WhatsAppIcon className="size-4" />
                 {t("common.whatsapp")}
@@ -289,9 +294,78 @@ export function CategoryCircles({
   className?: string;
   labelTone?: "dark" | "light";
 }) {
-  const { bi } = useLang();
+  const { bi, t, dir } = useLang();
   const { services: storeServices } = useAppData();
   const list = servicesProp ?? visibleServices(storeServices);
+  const scrollerRef = useRef<HTMLUListElement>(null);
+  const [canSwipe, setCanSwipe] = useState(false);
+  const isRtl = dir === "rtl";
+  const HintChevron = isRtl ? ChevronsLeft : ChevronsRight;
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el || !list.length) return;
+
+    const phoneMq = window.matchMedia("(max-width: 639px)");
+    const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const measure = () => {
+      setCanSwipe(phoneMq.matches && el.scrollWidth > el.clientWidth + 8);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    phoneMq.addEventListener("change", measure);
+
+    let paused = false;
+    let resumeTimer = 0;
+    let direction = 1;
+    let holdUntil = 0;
+    /** 1px every 280ms ≈ 3.5 px/sec */
+    const STEP = 1;
+    const TICK_MS = 280;
+
+    const pause = () => {
+      paused = true;
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        paused = false;
+      }, 4500);
+    };
+
+    const tick = () => {
+      if (!phoneMq.matches || reducedMq.matches || paused) return;
+      if (Date.now() < holdUntil) return;
+      const max = el.scrollWidth - el.clientWidth;
+      if (max <= 8) return;
+
+      const before = el.scrollLeft;
+      el.scrollBy({ left: (isRtl ? -STEP : STEP) * direction });
+      const moved = el.scrollLeft !== before;
+      const atEnd = Math.abs(el.scrollLeft) >= max - 1;
+      const atStart = Math.abs(el.scrollLeft) <= 1;
+      if (!moved || atEnd || atStart) {
+        if (atEnd || (!moved && direction === 1)) direction = -1;
+        else if (atStart || (!moved && direction === -1)) direction = 1;
+        holdUntil = Date.now() + 2000;
+      }
+    };
+
+    const interval = window.setInterval(tick, TICK_MS);
+    el.addEventListener("pointerdown", pause, { passive: true });
+    el.addEventListener("wheel", pause, { passive: true });
+    el.addEventListener("touchstart", pause, { passive: true });
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(resumeTimer);
+      ro.disconnect();
+      phoneMq.removeEventListener("change", measure);
+      el.removeEventListener("pointerdown", pause);
+      el.removeEventListener("wheel", pause);
+      el.removeEventListener("touchstart", pause);
+    };
+  }, [isRtl, list.length]);
 
   if (!list.length) return null;
 
@@ -305,13 +379,16 @@ export function CategoryCircles({
       )}
     >
       <ul
+        ref={scrollerRef}
+        data-category-scroller
         className={cn(
           "flex flex-nowrap items-center",
           /* phone: spaced circles, swipe — no overlap */
-          "gap-4 overflow-x-auto overscroll-x-contain scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-          "snap-x snap-mandatory py-1 ps-4 pe-6",
+          "gap-4 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          /* no mandatory snap — it fights the slow auto-crawl */
+          "py-1 ps-4 pe-6",
           /* PC: equal circles overlapping the previous one */
-          "sm:gap-0 sm:overflow-visible sm:scroll-auto sm:justify-center sm:py-0 sm:ps-0 sm:pe-0 sm:snap-none",
+          "sm:gap-0 sm:overflow-visible sm:scroll-auto sm:justify-center sm:py-0 sm:ps-0 sm:pe-0",
         )}
       >
         {list.map((s, i) => (
@@ -320,7 +397,7 @@ export function CategoryCircles({
             /* rightmost (first in RTL) sits on top of the next — desktop only */
             style={{ zIndex: list.length - i }}
             className={cn(
-              "relative w-[10.75rem] shrink-0 snap-center transition-[z-index] first:scroll-ms-0 hover:z-40 sm:w-auto sm:min-w-0 sm:flex-1 sm:basis-0 sm:snap-align-none",
+              "relative w-[10.75rem] shrink-0 transition-[z-index] hover:z-40 sm:w-auto sm:min-w-0 sm:flex-1 sm:basis-0",
               /* overlap on desktop only */
               i > 0 && "sm:-ms-6 lg:-ms-7",
             )}
@@ -332,11 +409,11 @@ export function CategoryCircles({
                 aria-label={bi(s.title)}
                 className="group mx-auto flex w-[10.75rem] flex-col items-center sm:w-full"
               >
-                <span className="relative block aspect-square w-full overflow-hidden rounded-2xl bg-[#E0652E] ring-[3px] ring-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.35)] transition duration-300 active:scale-[0.98] group-hover:-translate-y-1 group-hover:shadow-[0_16px_32px_-12px_rgb(0_0_0/0.45)]">
+                <span className="relative block aspect-square w-full overflow-hidden rounded-2xl bg-navy ring-[3px] ring-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.35)] transition duration-300 active:scale-[0.98] group-hover:-translate-y-1 group-hover:shadow-[0_16px_32px_-12px_rgb(0_0_0/0.45)]">
                   <SmartImage
                     src={s.image}
                     alt=""
-                    className="size-full object-contain object-center transition duration-500 group-hover:scale-[1.02]"
+                    className="size-full object-cover object-center transition duration-500 group-hover:scale-[1.04]"
                   />
                 </span>
                 <span
@@ -353,6 +430,35 @@ export function CategoryCircles({
         ))}
         <li className="w-2 shrink-0 sm:hidden" aria-hidden />
       </ul>
+
+      {canSwipe ? (
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-y-0 z-[5] flex w-14 items-center justify-center sm:hidden",
+            "end-0",
+            labelTone === "light"
+              ? "bg-gradient-to-l from-navy via-navy/80 to-transparent"
+              : "bg-gradient-to-l from-background via-background/90 to-transparent",
+          )}
+          aria-hidden
+        >
+          <span className="animate-category-nudge mb-8 flex size-9 items-center justify-center rounded-full bg-navy text-white shadow-lg ring-2 ring-white/80">
+            <HintChevron className="size-5" strokeWidth={2.5} />
+          </span>
+        </div>
+      ) : null}
+
+      {canSwipe ? (
+        <p
+          className={cn(
+            "mt-3 flex items-center justify-center gap-1.5 text-center text-xs font-semibold sm:hidden",
+            labelTone === "light" ? "text-white/85" : "text-navy/55",
+          )}
+        >
+          <HintChevron className="size-3.5 shrink-0 opacity-80" aria-hidden />
+          {t("home.browseSwipe")}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -362,6 +468,7 @@ export function CategoryCircles({
 export function HowToOrder({ service }: { service?: string }) {
   const { t, dir } = useLang();
   const company = useCompany();
+  const { openOrder } = useWhatsAppOrder();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   const steps = [t("order.s1"), t("order.s2"), t("order.s3")];
 
@@ -385,10 +492,10 @@ export function HowToOrder({ service }: { service?: string }) {
               </ol>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Link to="/quote" search={service ? { service } : {}} className="btn btn-gold">
+              <button type="button" onClick={() => openOrder(service)} className="btn btn-gold">
                 {t("common.requestQuote")}
                 <Arrow className="size-4" />
-              </Link>
+              </button>
               <a
                 href={company.wa(t("common.waGreeting"))}
                 target="_blank"

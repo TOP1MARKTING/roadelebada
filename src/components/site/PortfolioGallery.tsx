@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, Expand, Eye, X } from "lucide-react";
 import { useLang } from "@/i18n";
 import {
@@ -15,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Modal } from "./Modal";
 import { SmartImage } from "./SmartImage";
 import { Reveal } from "./Reveal";
+import { useWhatsAppOrder } from "./WhatsAppOrder";
 
 type Filter = "all" | PortfolioCategory;
 
@@ -43,6 +43,7 @@ export function PortfolioGallery({
   layout = "columns",
 }: PortfolioGalleryProps) {
   const { t, bi } = useLang();
+  const { openOrder } = useWhatsAppOrder();
   const [filter, setFilter] = useState<Filter>("all");
   const [previewId, setPreviewId] = useState<string | null>(null);
   const [lightboxId, setLightboxId] = useState<string | null>(null);
@@ -216,13 +217,16 @@ export function PortfolioGallery({
                 {t("home.portfolioNote")}
               </p>
               <div className="mt-auto flex flex-wrap gap-2 pt-6">
-                <Link
-                  to="/quote"
-                  search={{ service: categoryToService[preview.category] }}
+                <button
+                  type="button"
                   className="btn btn-gold btn-sm"
+                  onClick={() => {
+                    openOrder(categoryToService[preview.category]);
+                    setPreviewId(null);
+                  }}
                 >
                   {t("pf.similarCta")}
-                </Link>
+                </button>
                 <button
                   type="button"
                   className="btn btn-outline btn-sm"

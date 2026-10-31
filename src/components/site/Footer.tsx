@@ -21,16 +21,15 @@ export function Footer() {
     ...(website.showPortfolio ? [{ to: "/portfolio", label: t("nav.portfolio") }] : []),
     { to: "/blog", label: t("nav.blog") },
     { to: "/contact", label: t("nav.contact") },
-    { to: "/quote", label: t("nav.quote") },
   ] as const;
 
   return (
-    <footer className="relative overflow-hidden bg-dark pb-20 text-white/75 sm:pb-0">
+    <footer className="relative overflow-hidden bg-dark pb-24 text-white/75 sm:pb-0">
       <div className="texture-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden />
       <div className="container-x relative grid gap-8 py-10 sm:gap-12 sm:py-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-        <div className="flex w-full min-w-0 flex-col pe-14 sm:pe-0 lg:col-span-4">
-          <Link to="/" aria-label={t("nav.home")} className="inline-flex w-full max-w-full">
-            <Logo className="w-full" />
+        <div className="flex w-full min-w-0 flex-col items-center text-center sm:items-start sm:text-start lg:col-span-4">
+          <Link to="/" aria-label={t("nav.home")} className="inline-flex w-full max-w-full justify-center sm:justify-start">
+            <Logo className="w-full max-w-[16rem] sm:max-w-none" />
           </Link>
           <p className="mt-4 hidden max-w-sm text-sm leading-7 text-white/65 sm:mt-5 sm:block">
             {bi(website.footerDesc)}
@@ -39,20 +38,20 @@ export function Footer() {
             href={company.wa(t("common.waGreeting"))}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-gold mt-5 !flex w-full !min-h-12 !justify-center sm:mt-6 sm:!inline-flex sm:w-auto sm:!min-h-[2.375rem]"
+            className="btn btn-gold mt-5 !flex w-full max-w-sm !min-h-12 !justify-center sm:mt-6 sm:!inline-flex sm:w-auto sm:max-w-none sm:!min-h-[2.375rem]"
           >
             <WhatsAppIcon className="size-5 sm:size-4" />
             {t("footer.whatsappCta")}
           </a>
-          <div className="mt-5 w-full sm:mt-7 sm:w-auto">
+          <div className="mt-5 w-full max-w-sm sm:mt-7 sm:w-auto sm:max-w-none">
             <ul
-              className="flex w-full items-stretch gap-2 sm:w-auto sm:flex-wrap sm:items-center"
+              className="flex w-full items-stretch justify-center gap-2 sm:w-auto sm:flex-wrap sm:items-center sm:justify-start"
               aria-label={t("footer.socials")}
             >
               {siteConfig.socials.map(({ key }) => {
                 const url = company.socials[key];
                 const shell =
-                  "flex size-12 flex-1 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-gold hover:text-gold sm:size-10 sm:flex-none";
+                  "flex size-11 flex-1 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-gold hover:text-gold sm:size-10 sm:flex-none";
                 return (
                   <li key={key} className="min-w-0 flex-1 sm:flex-none">
                     {url ? (
@@ -85,7 +84,7 @@ export function Footer() {
 
           <a
             href={company.tel}
-            className="mt-5 flex w-full items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm transition hover:border-gold hover:text-gold sm:hidden"
+            className="mt-5 flex w-full max-w-sm items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm transition hover:border-gold hover:text-gold sm:hidden"
           >
             <Phone className="size-4 shrink-0 text-gold" />
             <span dir="ltr" className="font-semibold tracking-wide">
@@ -124,16 +123,16 @@ export function Footer() {
           </ul>
         </nav>
 
-        <div className="lg:col-span-3">
+        <div className="flex flex-col items-center text-center sm:items-start sm:text-start lg:col-span-3">
           <h2 className="text-sm font-bold text-white">{t("footer.contactInfo")}</h2>
-          <ul className="mt-5 space-y-4 text-sm">
+          <ul className="mt-5 w-full max-w-sm space-y-4 text-sm sm:max-w-none">
             <li className="hidden sm:block">
               <a href={company.tel} className="flex items-center gap-3 transition hover:text-gold">
                 <Phone className="size-4 shrink-0 text-gold" />
                 <span dir="ltr">{formatPhoneDisplay(company.phone)}</span>
               </a>
             </li>
-            <li className="flex items-start gap-3">
+            <li className="flex items-start justify-center gap-3 sm:justify-start">
               <MapPin className="mt-1 size-4 shrink-0 text-gold" />
               <span className="leading-7">
                 {bi(company.address)}

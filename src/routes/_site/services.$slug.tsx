@@ -12,6 +12,7 @@ import { SmartImage } from "@/components/site/SmartImage";
 import { Reveal } from "@/components/site/Reveal";
 import { Modal } from "@/components/site/Modal";
 import { WhatsAppIcon } from "@/components/site/SocialIcon";
+import { useWhatsAppOrder } from "@/components/site/WhatsAppOrder";
 import { useDocumentTitle } from "@/components/site/useDocumentTitle";
 
 export const Route = createFileRoute("/_site/services/$slug")({
@@ -32,6 +33,7 @@ function ServiceDetailPage() {
   const { t, bi, lang, dir } = useLang();
   const { services, hydrated } = useAppData();
   const company = useCompany();
+  const { openOrder } = useWhatsAppOrder();
   const [zoom, setZoom] = useState<string | null>(null);
   const service = services.find((s) => s.slug === slug && s.visible);
   useDocumentTitle(service ? bi(service.title) : t("notFound.title"));
@@ -73,46 +75,50 @@ function ServiceDetailPage() {
         kicker={t("page.svcDetailKicker")}
         crumbs={[{ label: t("page.servicesTitle"), to: "/services" }, { label: bi(service.title) }]}
       >
-        <div className="animate-fade-up mt-8 flex flex-col gap-3 xs:flex-row [animation-delay:160ms]">
-          <Link to="/quote" search={{ service: service.slug }} className="btn btn-gold">
+        <div className="animate-fade-up mt-5 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3 [animation-delay:160ms]">
+          <button
+            type="button"
+            onClick={() => openOrder(service.slug)}
+            className="btn btn-gold !min-h-11 w-full !whitespace-normal !px-4 !py-2.5 !text-sm sm:w-auto sm:!min-h-12 sm:!whitespace-nowrap sm:!px-5 sm:!text-[0.95rem]"
+          >
             {t("svcDetail.cta")}
-            <Arrow className="size-4" />
-          </Link>
+            <Arrow className="size-4 shrink-0" />
+          </button>
           <a
             href={company.wa(waMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline-light"
+            className="btn btn-outline-light !min-h-11 w-full !whitespace-normal !px-4 !py-2.5 !text-sm sm:w-auto sm:!min-h-12 sm:!whitespace-nowrap sm:!px-5 sm:!text-[0.95rem]"
           >
-            <WhatsAppIcon className="size-4" />
+            <WhatsAppIcon className="size-4 shrink-0" />
             {t("contact.whatsappBtn")}
           </a>
         </div>
       </PageHero>
 
-      <section className="relative overflow-hidden py-14 sm:py-20">
+      <section className="relative overflow-hidden py-10 sm:py-20">
         <div
           className="pointer-events-none absolute inset-0 -z-10 bg-gold-soft/40"
           aria-hidden
         />
-        <div className="container-x space-y-14 sm:space-y-16">
+        <div className="container-x space-y-10 sm:space-y-16">
           {(galleryItems.length > 0 || examples.length > 0) && (
             <Reveal>
-              <div className="flex flex-wrap items-end justify-between gap-3">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
                 <div>
-                  <p className="text-xs font-bold tracking-[0.18em] text-gold-strong uppercase">
+                  <p className="text-[0.7rem] font-bold tracking-[0.18em] text-gold-strong uppercase sm:text-xs">
                     {String(galleryItems.length).padStart(2, "0")}
                   </p>
-                  <h2 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">
+                  <h2 className="mt-1.5 text-xl font-extrabold text-navy sm:mt-2 sm:text-3xl">
                     {t("svc.examplesTitle")}
                   </h2>
                 </div>
-                <p className="max-w-sm text-sm leading-6 text-muted-foreground">
+                <p className="max-w-sm text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">
                   {t("services.visualNote")}
                 </p>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+              <div className="mt-5 grid grid-cols-2 gap-2.5 sm:mt-8 sm:gap-4 lg:grid-cols-4">
                 {galleryItems.map((g, i) => {
                   const label =
                     examples[i]?.replace(/\.$/, "") || `${t("services.sample")} ${i + 1}`;
@@ -122,7 +128,7 @@ function ServiceDetailPage() {
                       key={`${g}-${i}`}
                       type="button"
                       onClick={() => setZoom(g)}
-                      className={`group relative overflow-hidden rounded-[1.35rem] bg-navy text-start shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift ${
+                      className={`group relative overflow-hidden rounded-2xl bg-navy text-start shadow-soft transition duration-500 active:scale-[0.99] sm:rounded-[1.35rem] sm:hover:-translate-y-1 sm:hover:shadow-lift ${
                         featured ? "sm:col-span-2 sm:row-span-2" : ""
                       }`}
                       aria-label={`${t("pf.zoom")} — ${label}`}
@@ -132,18 +138,18 @@ function ServiceDetailPage() {
                         src={g}
                         alt={label}
                         className={`w-full object-cover transition duration-700 group-hover:scale-[1.06] ${
-                          featured ? "aspect-[4/3] sm:aspect-square" : "aspect-square"
+                          featured ? "aspect-square sm:aspect-square" : "aspect-square"
                         }`}
                       />
-                      <span className="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/15 to-transparent opacity-90 transition group-hover:opacity-100" />
-                      <span className="absolute start-3 top-3 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white backdrop-blur-md">
+                      <span className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/20 to-transparent" />
+                      <span className="absolute start-2 top-2 rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-bold tracking-wide text-white backdrop-blur-md sm:start-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-[11px]">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="absolute end-3 top-3 flex size-9 items-center justify-center rounded-full bg-white/90 text-navy opacity-0 shadow transition duration-300 group-hover:opacity-100">
-                        <Expand className="size-4" />
+                      <span className="absolute end-2 top-2 flex size-7 items-center justify-center rounded-full bg-white/90 text-navy shadow sm:end-3 sm:top-3 sm:size-9 sm:opacity-0 sm:transition sm:duration-300 sm:group-hover:opacity-100">
+                        <Expand className="size-3.5 sm:size-4" />
                       </span>
-                      <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                        <span className="block text-sm font-bold text-white sm:text-base">
+                      <span className="absolute inset-x-0 bottom-0 p-2.5 sm:p-4">
+                        <span className="line-clamp-2 block text-[0.72rem] font-bold leading-4 text-white sm:text-base sm:leading-6">
                           {label}
                         </span>
                       </span>
@@ -153,11 +159,11 @@ function ServiceDetailPage() {
               </div>
 
               {examples.length > galleryItems.length && (
-                <ul className="mt-5 flex flex-wrap gap-2">
+                <ul className="mt-4 flex flex-wrap gap-2 sm:mt-5">
                   {examples.slice(galleryItems.length).map((ex) => (
                     <li
                       key={ex}
-                      className="rounded-full border bg-background px-4 py-2 text-sm font-medium text-navy"
+                      className="rounded-full border bg-background px-3 py-1.5 text-xs font-medium text-navy sm:px-4 sm:py-2 sm:text-sm"
                     >
                       {ex.replace(/\.$/, "")}
                     </li>
@@ -168,37 +174,39 @@ function ServiceDetailPage() {
           )}
 
           <Reveal>
-            <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-7">
-                <div className="flex items-center gap-3">
-                  <span className="flex size-12 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong">
-                    <Icon className="size-5" />
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <span className="flex size-10 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong sm:size-12">
+                    <Icon className="size-4 sm:size-5" />
                   </span>
-                  <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
+                  <h2 className="text-xl font-extrabold text-navy sm:text-3xl">
                     {t("services.aboutService")}
                   </h2>
                 </div>
-                <p className="mt-5 max-w-2xl text-[1.08rem] leading-9 text-foreground/80">
+                <p className="mt-4 max-w-2xl text-[0.95rem] leading-8 text-foreground/80 sm:mt-5 sm:text-[1.08rem] sm:leading-9">
                   {bi(service.detail) || bi(service.short)}
                 </p>
               </div>
 
               {benefits.length > 0 && (
                 <div className="lg:col-span-5">
-                  <h3 className="text-sm font-bold tracking-[0.14em] text-gold-strong uppercase">
+                  <h3 className="text-xs font-bold tracking-[0.14em] text-gold-strong uppercase sm:text-sm">
                     {t("svcDetail.benefitsTitle")}
                   </h3>
-                  <ul className="mt-4 grid gap-3">
+                  <ul className="mt-3 grid gap-2.5 sm:mt-4 sm:gap-3">
                     {benefits.slice(0, 4).map((b, i) => (
                       <li
                         key={b}
-                        className="flex items-start gap-3 rounded-2xl border border-border/70 bg-card/80 px-4 py-3.5 backdrop-blur-sm transition hover:border-gold/50"
+                        className="flex items-start gap-2.5 rounded-2xl border border-border/70 bg-card/80 px-3.5 py-3 backdrop-blur-sm transition hover:border-gold/50 sm:gap-3 sm:px-4 sm:py-3.5"
                         style={{ transitionDelay: `${i * 50}ms` }}
                       >
-                        <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-white">
-                          <Check className="size-3.5" />
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold text-white sm:size-6">
+                          <Check className="size-3 sm:size-3.5" />
                         </span>
-                        <span className="text-[0.95rem] leading-7 text-navy">{b}</span>
+                        <span className="text-sm leading-6 text-navy sm:text-[0.95rem] sm:leading-7">
+                          {b}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -208,7 +216,7 @@ function ServiceDetailPage() {
           </Reveal>
 
           <Reveal>
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-navy px-6 py-8 text-white shadow-lift sm:px-10 sm:py-10">
+            <div className="relative overflow-hidden rounded-[1.35rem] bg-navy px-4 py-6 text-white shadow-lift sm:rounded-[1.75rem] sm:px-10 sm:py-10">
               <div
                 className="pointer-events-none absolute -start-16 top-0 size-56 rounded-full bg-gold/20 blur-3xl"
                 aria-hidden
@@ -217,30 +225,37 @@ function ServiceDetailPage() {
                 className="pointer-events-none absolute -end-10 bottom-0 size-48 rounded-full bg-orange-500/15 blur-3xl"
                 aria-hidden
               />
-              <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+              <div className="relative grid gap-5 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-8">
                 <div>
-                  <h2 className="text-2xl font-extrabold sm:text-3xl">{t("services.sidebarTitle")}</h2>
-                  <p className="mt-3 max-w-xl text-sm leading-7 text-white/70 sm:text-base">
+                  <h2 className="text-xl font-extrabold sm:text-3xl">{t("services.sidebarTitle")}</h2>
+                  <p className="mt-2 max-w-xl text-sm leading-7 text-white/70 sm:mt-3 sm:text-base">
                     {t("services.sidebarDesc")}
                   </p>
                 </div>
-                <div className="grid gap-3">
-                  <Link to="/quote" search={{ service: service.slug }} className="btn btn-gold w-full">
+                <div className="grid gap-2.5 sm:gap-3">
+                  <button
+                    type="button"
+                    onClick={() => openOrder(service.slug)}
+                    className="btn btn-gold w-full !min-h-11 !whitespace-normal !px-4 !text-sm sm:!min-h-12 sm:!whitespace-nowrap sm:!text-[0.95rem]"
+                  >
                     {t("svcDetail.cta")}
-                    <Arrow className="size-4" />
-                  </Link>
-                  <div className="grid gap-3 sm:grid-cols-2">
+                    <Arrow className="size-4 shrink-0" />
+                  </button>
+                  <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3">
                     <a
                       href={company.wa(waMessage)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn btn-outline-light w-full"
+                      className="btn btn-outline-light w-full !min-h-11 !whitespace-normal !px-4 !text-sm sm:!min-h-12 sm:!whitespace-nowrap"
                     >
-                      <WhatsAppIcon className="size-4" />
+                      <WhatsAppIcon className="size-4 shrink-0" />
                       {t("contact.whatsappBtn")}
                     </a>
-                    <a href={company.tel} className="btn btn-outline-light w-full">
-                      <Phone className="size-4" />
+                    <a
+                      href={company.tel}
+                      className="btn btn-outline-light w-full !min-h-11 !px-4 !text-sm sm:!min-h-12"
+                    >
+                      <Phone className="size-4 shrink-0" />
                       <span dir="ltr">{formatPhoneDisplay(company.phone)}</span>
                     </a>
                   </div>
@@ -252,10 +267,10 @@ function ServiceDetailPage() {
       </section>
 
       {related.length > 0 && (
-        <section className="pb-16 sm:pb-20">
+        <section className="pb-12 sm:pb-20">
           <div className="container-x">
-            <h2 className="text-lg font-bold text-navy">{t("svcDetail.otherServices")}</h2>
-            <ul className="mt-4 flex flex-wrap gap-2">
+            <h2 className="text-base font-bold text-navy sm:text-lg">{t("svcDetail.otherServices")}</h2>
+            <ul className="mt-3 flex flex-wrap gap-2 sm:mt-4">
               {related.map((s) => {
                 const RIcon = serviceIcons[s.iconKey] ?? serviceIcons.sparkles;
                 return (
@@ -263,9 +278,9 @@ function ServiceDetailPage() {
                     <Link
                       to="/services/$slug"
                       params={{ slug: s.slug }}
-                      className="inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2.5 text-sm font-semibold text-navy transition hover:border-gold hover:text-gold-strong"
+                      className="inline-flex items-center gap-2 rounded-full border bg-white px-3.5 py-2 text-xs font-semibold text-navy transition hover:border-gold hover:text-gold-strong sm:px-4 sm:py-2.5 sm:text-sm"
                     >
-                      <RIcon className="size-4 text-gold-strong" />
+                      <RIcon className="size-3.5 text-gold-strong sm:size-4" />
                       {bi(s.title)}
                     </Link>
                   </li>
@@ -278,12 +293,12 @@ function ServiceDetailPage() {
 
       <Modal open={!!zoom} onClose={() => setZoom(null)} size="sm" title={bi(service.title)}>
         {zoom && (
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center p-1">
             <SmartImage
               src={zoom}
               alt={bi(service.title)}
               loading="eager"
-              className="max-h-[55vh] w-auto max-w-full rounded-xl object-contain"
+              className="max-h-[50vh] w-auto max-w-full rounded-xl object-contain sm:max-h-[55vh]"
             />
           </div>
         )}

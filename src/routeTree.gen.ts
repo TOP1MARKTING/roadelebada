@@ -13,7 +13,6 @@ import { Route as SiteRouteImport } from './routes/_site'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as SiteAboutRouteImport } from './routes/_site/about'
 import { Route as SiteContactRouteImport } from './routes/_site/contact'
-import { Route as SitePortfolioRouteImport } from './routes/_site/portfolio'
 import { Route as SitePrivacyRouteImport } from './routes/_site/privacy'
 import { Route as SiteQuoteRouteImport } from './routes/_site/quote'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -51,11 +50,6 @@ const SiteAboutRoute = SiteAboutRouteImport.update({
 const SiteContactRoute = SiteContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => SiteRoute,
-} as any)
-const SitePortfolioRoute = SitePortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
   getParentRoute: () => SiteRoute,
 } as any)
 const SitePrivacyRoute = SitePrivacyRouteImport.update({
@@ -158,7 +152,6 @@ export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
   '/about': typeof SiteAboutRoute
   '/contact': typeof SiteContactRoute
-  '/portfolio': typeof SitePortfolioRoute
   '/privacy': typeof SitePrivacyRoute
   '/quote': typeof SiteQuoteRoute
   '/admin': typeof AdminPanelRouteWithChildren
@@ -182,7 +175,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/about': typeof SiteAboutRoute
   '/contact': typeof SiteContactRoute
-  '/portfolio': typeof SitePortfolioRoute
   '/privacy': typeof SitePrivacyRoute
   '/quote': typeof SiteQuoteRoute
   '/admin': typeof AdminIndexRoute
@@ -208,7 +200,6 @@ export interface FileRoutesById {
   '/_site': typeof SiteRouteWithChildren
   '/_site/about': typeof SiteAboutRoute
   '/_site/contact': typeof SiteContactRoute
-  '/_site/portfolio': typeof SitePortfolioRoute
   '/_site/privacy': typeof SitePrivacyRoute
   '/_site/quote': typeof SiteQuoteRoute
   '/admin/_panel': typeof AdminPanelRouteWithChildren
@@ -236,7 +227,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
-    | '/portfolio'
     | '/privacy'
     | '/quote'
     | '/admin'
@@ -260,7 +250,6 @@ export interface FileRouteTypes {
   to:
     | '/about'
     | '/contact'
-    | '/portfolio'
     | '/privacy'
     | '/quote'
     | '/admin'
@@ -285,7 +274,6 @@ export interface FileRouteTypes {
     | '/_site'
     | '/_site/about'
     | '/_site/contact'
-    | '/_site/portfolio'
     | '/_site/privacy'
     | '/_site/quote'
     | '/admin/_panel'
@@ -343,13 +331,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof SiteContactRouteImport
-      parentRoute: typeof SiteRoute
-    }
-    '/_site/portfolio': {
-      id: '/_site/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof SitePortfolioRouteImport
       parentRoute: typeof SiteRoute
     }
     '/_site/privacy': {
@@ -491,7 +472,6 @@ declare module '@tanstack/react-router' {
 interface SiteRouteChildren {
   SiteAboutRoute: typeof SiteAboutRoute
   SiteContactRoute: typeof SiteContactRoute
-  SitePortfolioRoute: typeof SitePortfolioRoute
   SitePrivacyRoute: typeof SitePrivacyRoute
   SiteQuoteRoute: typeof SiteQuoteRoute
   SiteIndexRoute: typeof SiteIndexRoute
@@ -504,7 +484,6 @@ interface SiteRouteChildren {
 const SiteRouteChildren: SiteRouteChildren = {
   SiteAboutRoute: SiteAboutRoute,
   SiteContactRoute: SiteContactRoute,
-  SitePortfolioRoute: SitePortfolioRoute,
   SitePrivacyRoute: SitePrivacyRoute,
   SiteQuoteRoute: SiteQuoteRoute,
   SiteIndexRoute: SiteIndexRoute,

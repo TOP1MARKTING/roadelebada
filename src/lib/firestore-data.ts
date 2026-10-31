@@ -112,9 +112,13 @@ export async function loadSiteBundle(db: Firestore): Promise<SiteBundle> {
     company: companySnap.exists()
       ? ({ ...defaultCompany, ...companySnap.data() } as CompanySettings)
       : defaultCompany,
-    website: websiteSnap.exists()
-      ? ({ ...defaultWebsite, ...websiteSnap.data() } as WebsiteSettings)
-      : defaultWebsite,
+    website: {
+      ...(websiteSnap.exists()
+        ? ({ ...defaultWebsite, ...websiteSnap.data() } as WebsiteSettings)
+        : defaultWebsite),
+      // Public portfolio page removed — keep nav/home section off.
+      showPortfolio: false,
+    },
     services: mergedServices,
     portfolio: portfolio.length ? portfolio : defaultPortfolio,
     posts: posts.length ? posts : defaultBlogPosts,

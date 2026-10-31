@@ -61,8 +61,8 @@ function BlogPostPage() {
             <SmartImage src={cover} alt="" className="size-full object-cover opacity-35" />
             <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-navy/50" />
           </div>
-          <div className="container-x relative py-16 sm:py-24">
-            <nav className="mb-6 text-sm text-white/70" aria-label={t("common.breadcrumb")}>
+          <div className="container-x relative pb-10 pt-[5.5rem] sm:py-24">
+            <nav className="mb-4 text-xs text-white/70 sm:mb-6 sm:text-sm" aria-label={t("common.breadcrumb")}>
               <Link to="/" className="hover:text-gold">
                 {t("nav.home")}
               </Link>
@@ -71,16 +71,18 @@ function BlogPostPage() {
                 {t("nav.blog")}
               </Link>
             </nav>
-            <p className="inline-flex rounded-full bg-gold-soft/20 px-3 py-1 text-xs font-bold text-gold">
+            <p className="inline-flex rounded-full bg-gold-soft/20 px-3 py-1 text-[0.7rem] font-bold text-gold sm:text-xs">
               {bi(blogCategoryLabel[post.category])}
             </p>
-            <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
+            <h1 className="mt-3 max-w-3xl text-[1.7rem] font-extrabold leading-tight sm:mt-4 sm:text-4xl lg:text-5xl">
               {bi(post.title)}
             </h1>
             {bi(post.excerpt) && (
-              <p className="mt-4 max-w-2xl text-base leading-8 text-white/80 sm:text-lg">{bi(post.excerpt)}</p>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80 sm:mt-4 sm:text-lg sm:leading-8">
+                {bi(post.excerpt)}
+              </p>
             )}
-            <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-white/65">
+            <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/65 sm:mt-6 sm:text-sm">
               {author && <span>{author.name}</span>}
               {post.publishedAt && (
                 <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
@@ -89,19 +91,19 @@ function BlogPostPage() {
           </div>
         </header>
 
-        <div className="container-x py-12 sm:py-16">
+        <div className="container-x py-8 sm:py-16">
           <div className="mx-auto max-w-3xl">
             <SmartImage
               src={cover}
               alt={bi(post.coverAlt) || bi(post.title)}
-              className="mb-10 aspect-[16/9] w-full rounded-2xl object-cover shadow-lift"
+              className="mb-6 aspect-[16/9] w-full rounded-2xl object-cover shadow-lift sm:mb-10"
             />
             <div
-              className="prose-blog text-[1.05rem] leading-8 text-foreground/90 [&_a]:font-semibold [&_a]:text-gold-strong [&_a]:underline-offset-2 hover:[&_a]:underline [&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:text-muted-foreground [&_figure]:my-8 [&_h2]:mt-10 [&_h2]:scroll-mt-28 [&_h2]:text-2xl [&_h2]:font-extrabold [&_h2]:text-navy [&_h3]:mt-8 [&_h3]:scroll-mt-28 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-navy [&_img]:my-4 [&_img]:rounded-xl [&_p]:my-4 [&_strong]:text-navy"
+              className="prose-blog text-[0.98rem] leading-7 text-foreground/90 sm:text-[1.05rem] sm:leading-8 [&_a]:font-semibold [&_a]:text-gold-strong [&_a]:underline-offset-2 hover:[&_a]:underline [&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:text-muted-foreground [&_figure]:my-6 sm:[&_figure]:my-8 [&_h2]:mt-8 [&_h2]:scroll-mt-28 [&_h2]:text-xl [&_h2]:font-extrabold [&_h2]:text-navy sm:[&_h2]:mt-10 sm:[&_h2]:text-2xl [&_h3]:mt-6 [&_h3]:scroll-mt-28 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-navy sm:[&_h3]:mt-8 sm:[&_h3]:text-xl [&_img]:my-4 [&_img]:rounded-xl [&_p]:my-3.5 sm:[&_p]:my-4 [&_strong]:text-navy"
               dangerouslySetInnerHTML={{ __html: html }}
             />
             {post.tags.length > 0 && (
-              <ul className="mt-12 flex flex-wrap gap-2 border-t pt-8" aria-label={t("blog.tags")}>
+              <ul className="mt-8 flex flex-wrap gap-2 border-t pt-6 sm:mt-12 sm:pt-8" aria-label={t("blog.tags")}>
                 {post.tags.map((tag) => (
                   <li
                     key={tag}

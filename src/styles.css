@@ -427,6 +427,34 @@
   animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Soft nudge for category strip swipe hint (points toward more items) */
+@keyframes category-nudge-rtl {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-6px);
+  }
+}
+
+@keyframes category-nudge-ltr {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@utility animate-category-nudge {
+  animation: category-nudge-rtl 1.8s ease-in-out infinite;
+  [dir="ltr"] & {
+    animation-name: category-nudge-ltr;
+  }
+}
+
 @utility animate-fade-in {
   animation: fade-in 0.6s ease both;
 }

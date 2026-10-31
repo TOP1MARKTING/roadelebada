@@ -9,11 +9,13 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { SmartImage } from "./SmartImage";
 import { WhatsAppIcon } from "./SocialIcon";
+import { useWhatsAppOrder } from "./WhatsAppOrder";
 
 export function Header() {
   const { t, bi, lang } = useLang();
   const { services, website } = useAppData();
   const company = useCompany();
+  const { openOrder } = useWhatsAppOrder();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -88,9 +90,13 @@ export function Header() {
 
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               {website.showContactButton && (
-                <Link to="/quote" className="btn btn-gold btn-sm hidden md:inline-flex">
+                <button
+                  type="button"
+                  onClick={() => openOrder()}
+                  className="btn btn-gold btn-sm hidden md:inline-flex"
+                >
                   {t("nav.quote")}
-                </Link>
+                </button>
               )}
               <button
                 type="button"
@@ -164,13 +170,13 @@ export function Header() {
                             ))}
                           </ul>
                           <div className="mt-5 flex gap-2">
-                            <Link
-                              to="/quote"
-                              search={{ service: s.slug }}
+                            <button
+                              type="button"
+                              onClick={() => openOrder(s.slug)}
                               className="btn btn-gold btn-sm"
                             >
                               {t("nav.quote")}
-                            </Link>
+                            </button>
                             <Link
                               to="/services/$slug"
                               params={{ slug: s.slug }}
@@ -180,11 +186,11 @@ export function Header() {
                             </Link>
                           </div>
                         </div>
-                        <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#E0652E]">
+                        <div className="relative aspect-square overflow-hidden rounded-2xl bg-navy">
                           <SmartImage
                             src={s.image}
                             alt=""
-                            className="absolute inset-0 size-full object-contain object-center"
+                            className="absolute inset-0 size-full object-cover object-center"
                           />
                         </div>
                       </div>
@@ -273,9 +279,16 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <Link to="/quote" className="btn btn-gold mt-6 w-full">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              openOrder();
+            }}
+            className="btn btn-gold mt-6 w-full"
+          >
             {t("nav.quote")}
-          </Link>
+          </button>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <a href={company.tel} className="btn btn-outline-light btn-sm">
               <Phone className="size-4" />

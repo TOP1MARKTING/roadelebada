@@ -67,6 +67,6 @@ export const defaultWebsite: WebsiteSettings = {
     en: "A Saudi agency specialized in design, advertising and promotion, delivering creative solutions with high execution quality.",
   },
   showContactButton: true,
-  showPortfolio: true,
+  showPortfolio: false,
   maintenanceMode: false,
 };

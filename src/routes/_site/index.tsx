@@ -4,11 +4,9 @@ import { useLang } from "@/i18n";
 import { img } from "@/lib/assets";
 import { seo } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { publishedPortfolio, useAppData, visibleServices } from "@/store/app-data";
+import { useAppData, visibleServices } from "@/store/app-data";
 import { SmartImage } from "@/components/site/SmartImage";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { PortfolioGallery } from "@/components/site/PortfolioGallery";
-import { Reveal } from "@/components/site/Reveal";
 import {
   AboutIntro,
   CategoryCircles,
@@ -17,9 +15,16 @@ import {
   ProcessSteps,
   WhyUs,
 } from "@/components/site/sections";
+import { useWhatsAppOrder } from "@/components/site/WhatsAppOrder";
 import { useDocumentTitle } from "@/components/site/useDocumentTitle";
 
+interface HomeSearch {
+  order?: string;
+}
+
 export const Route = createFileRoute("/_site/")({
+  validateSearch: (search: Record<string, unknown>): HomeSearch =>
+    typeof search.order === "string" && search.order ? { order: search.order } : {},
   head: () =>
     seo({
       title: siteConfig.nameAr,
@@ -32,6 +37,7 @@ export const Route = createFileRoute("/_site/")({
 
 function Hero() {
   const { t, dir } = useLang();
+  const { openOrder } = useWhatsAppOrder();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   /* Big curve on the corner that faces the copy (toward center) */
   const imageCurve =
@@ -41,11 +47,11 @@ function Hero() {
 
   return (
     <section className="relative isolate flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-white">
-      <div aria-hidden className="h-[4.25rem] shrink-0 sm:h-[5.25rem] lg:h-[6.5rem]" />
+      <div aria-hidden className="h-[3.9rem] shrink-0 sm:h-[5.25rem] lg:h-[6.5rem]" />
 
-      <div className="mx-auto grid min-h-0 w-[calc(100%-1rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.35fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.15fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch">
+      <div className="mx-auto grid min-h-0 w-[calc(100%-0.75rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.4fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.15fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch">
         {/* Copy — right in RTL; compact on phone so whole hero fits one screen */}
-        <div className="order-2 flex shrink-0 items-center px-4 py-2.5 sm:px-8 sm:py-6 lg:order-1 lg:px-10 lg:py-8 xl:px-14">
+        <div className="order-2 flex shrink-0 items-center px-3.5 py-2 sm:px-8 sm:py-6 lg:order-1 lg:px-10 lg:py-8 xl:px-14">
           <div className="animate-fade-up w-full max-w-lg text-start lg:max-w-xl">
             <p className="kicker mb-2 max-w-full !border-gold/35 !bg-gold-soft/80 !px-2.5 !py-1 !text-[0.68rem] !text-gold-strong sm:mb-5 sm:!px-3.5 sm:!py-1.5 sm:!text-[0.78rem]">
               <span className="line-clamp-1">{t("hero.label")}</span>
@@ -64,25 +70,26 @@ function Hero() {
                 {t("hero.cta1")}
                 <Arrow className="size-3.5 sm:size-4 transition-transform group-hover:-translate-x-1 ltr:group-hover:translate-x-1" />
               </Link>
-              <Link
-                to="/quote"
+              <button
+                type="button"
+                onClick={() => openOrder()}
                 className="btn btn-outline !min-h-10 flex-1 !bg-white !px-3 !py-2 text-xs sm:w-auto sm:flex-none sm:!min-h-11 sm:!px-5 sm:text-sm"
               >
                 {t("hero.cta2")}
-              </Link>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Image — small white gap above & below (~8px) */}
-        <div className="order-1 flex min-h-[50svh] py-8 sm:min-h-0 lg:order-2 lg:min-h-0 lg:py-8">
+        {/* Image — tighter top gap on phone; breathing room on larger screens */}
+        <div className="order-1 flex min-h-[48svh] pt-1.5 pb-3 sm:min-h-0 sm:py-6 lg:order-2 lg:min-h-0 lg:py-8">
           <div className={`relative min-h-0 w-full flex-1 overflow-hidden ${imageCurve}`}>
             <SmartImage
               src={img("hero")}
               alt=""
               loading="eager"
               fetchPriority="high"
-              className="absolute inset-0 size-full object-cover object-[50%_45%]"
+              className="absolute inset-0 size-full object-cover object-[50%_42%] sm:object-[50%_45%]"
             />
           </div>
         </div>
@@ -93,7 +100,7 @@ function Hero() {
 
 function HomePage() {
   const { t, dir } = useLang();
-  const { services, portfolio, website } = useAppData();
+  const { services } = useAppData();
   const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
   useDocumentTitle();
 
@@ -126,38 +133,6 @@ function HomePage() {
       <AboutIntro />
       <WhyUs />
       <ProcessSteps />
-
-      {website.showPortfolio && (
-        <section className="py-20 sm:py-28">
-          <div className="container-x">
-            <SectionHeading
-              kicker={t("home.portfolioKicker")}
-              title={t("home.portfolioTitle")}
-              description={t("home.portfolioDesc")}
-              action={
-                <Link to="/portfolio" className="btn btn-navy">
-                  {t("common.viewAll")}
-                  <Arrow className="size-4" />
-                </Link>
-              }
-            />
-            <div className="mt-12">
-              <PortfolioGallery
-                items={publishedPortfolio(portfolio)}
-                withFilters={false}
-                limit={6}
-                layout="bento"
-              />
-            </div>
-            <Reveal>
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                {t("home.portfolioNote")}
-              </p>
-            </Reveal>
-          </div>
-        </section>
-      )}
-
       <CtaBand />
       <ContactStrip />
     </>

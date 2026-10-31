@@ -70,6 +70,10 @@ export const dict: Record<string, { ar: string; en: string }> = {
     ar: "اختر الفئة التي تحتاجها، ثم اطّلع على التفاصيل أو اطلب عرض سعر مباشرة.",
     en: "Choose the category you need, then view the details or request a quote right away.",
   },
+  "home.browseSwipe": {
+    ar: "اسحب لعرض باقي الخدمات",
+    en: "Swipe to see more services",
+  },
   "home.aboutKicker": { ar: "من نحن", en: "About us" },
   "home.aboutTitle": {
     ar: "الإبداع يبدأ بفكرة... والتميز يظهر في التفاصيل",
@@ -247,8 +251,8 @@ export const dict: Record<string, { ar: string; en: string }> = {
   },
 
   // ---------- Quote form ----------
-  "quote.name": { ar: "الاسم الكامل", en: "Full name" },
-  "quote.phone": { ar: "رقم الجوال", en: "Mobile number" },
+  "quote.name": { ar: "الاسم", en: "Name" },
+  "quote.phone": { ar: "رقم التواصل", en: "Contact number" },
   "quote.business": { ar: "اسم النشاط التجاري", en: "Business name" },
   "quote.email": { ar: "البريد الإلكتروني", en: "Email address" },
   "quote.service": { ar: "الخدمة المطلوبة", en: "Requested service" },
@@ -803,6 +807,18 @@ export const dict: Record<string, { ar: string; en: string }> = {
   "quote.waService": { ar: "الخدمة", en: "Service" },
   "quote.waItems": { ar: "العناصر", en: "Items" },
   "quote.waNote": { ar: "ملاحظة", en: "Note" },
+  "quote.waName": { ar: "الاسم", en: "Name" },
+  "quote.waPhone": { ar: "رقم التواصل", en: "Contact number" },
+  "quote.waAddress": { ar: "العنوان", en: "Address" },
+  "quote.address": { ar: "العنوان", en: "Address" },
+  "quote.addressShort": {
+    ar: "يرجى إدخال عنوان أوضح (5 أحرف على الأقل)",
+    en: "Please enter a clearer address (at least 5 characters)",
+  },
+  "quote.modalDesc": {
+    ar: "اختر الخدمة والعناصر وأرسل طلبك مباشرة عبر واتساب.",
+    en: "Pick a service and items, then send your request on WhatsApp.",
+  },
 
   // ---------- Forms ----------
   "form.nameShort": {
