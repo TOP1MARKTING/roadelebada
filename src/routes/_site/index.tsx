@@ -43,9 +43,9 @@ function Hero() {
     <section className="relative isolate flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-white">
       <div aria-hidden className="h-[4.25rem] shrink-0 sm:h-[5.25rem] lg:h-[6.5rem]" />
 
-      <div className="mx-auto grid min-h-0 w-[calc(100%-1rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.2fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.05fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch lg:pb-1.5">
+      <div className="mx-auto grid min-h-0 w-[calc(100%-1rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.35fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.15fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch lg:pb-0">
         {/* Copy — right in RTL; compact on phone so whole hero fits one screen */}
-        <div className="order-2 flex shrink-0 items-center px-4 py-3 sm:px-8 sm:py-8 lg:order-1 lg:px-10 lg:py-10 xl:px-14">
+        <div className="order-2 flex shrink-0 items-center px-4 py-2.5 sm:px-8 sm:py-6 lg:order-1 lg:px-10 lg:py-8 xl:px-14">
           <div className="animate-fade-up w-full max-w-lg text-start lg:max-w-xl">
             <p className="kicker mb-2 max-w-full !border-gold/35 !bg-gold-soft/80 !px-2.5 !py-1 !text-[0.68rem] !text-gold-strong sm:mb-5 sm:!px-3.5 sm:!py-1.5 sm:!text-[0.78rem]">
               <span className="line-clamp-1">{t("hero.label")}</span>
@@ -74,16 +74,16 @@ function Hero() {
           </div>
         </div>
 
-        {/* Image — taller share on phone; ~6px white gap under on desktop */}
+        {/* Image — fills to the bottom (no large white gap under) */}
         <div
-          className={`relative order-1 min-h-[46svh] overflow-hidden sm:min-h-0 lg:order-2 lg:min-h-0 lg:pb-1.5 ${imageCurve}`}
+          className={`relative order-1 min-h-[50svh] overflow-hidden sm:min-h-0 lg:order-2 lg:min-h-0 ${imageCurve}`}
         >
           <SmartImage
             src={img("hero")}
             alt=""
             loading="eager"
             fetchPriority="high"
-            className="absolute inset-0 size-full object-cover object-[50%_42%] lg:bottom-1.5 lg:top-0 lg:h-auto lg:min-h-full"
+            className="absolute inset-0 size-full object-cover object-[50%_45%]"
           />
         </div>
       </div>
