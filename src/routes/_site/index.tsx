@@ -43,7 +43,7 @@ function Hero() {
     <section className="relative isolate flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-white">
       <div aria-hidden className="h-[4.25rem] shrink-0 sm:h-[5.25rem] lg:h-[6.5rem]" />
 
-      <div className="mx-auto grid min-h-0 w-[calc(100%-1rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.35fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.15fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch lg:pb-0">
+      <div className="mx-auto grid min-h-0 w-[calc(100%-1rem)] max-w-[76rem] flex-1 grid-rows-[minmax(0,1.35fr)_auto] sm:w-[calc(100%-2rem)] sm:grid-rows-[minmax(0,1.15fr)_auto] lg:grid-cols-2 lg:grid-rows-none lg:items-stretch">
         {/* Copy — right in RTL; compact on phone so whole hero fits one screen */}
         <div className="order-2 flex shrink-0 items-center px-4 py-2.5 sm:px-8 sm:py-6 lg:order-1 lg:px-10 lg:py-8 xl:px-14">
           <div className="animate-fade-up w-full max-w-lg text-start lg:max-w-xl">
@@ -74,17 +74,17 @@ function Hero() {
           </div>
         </div>
 
-        {/* Image — fills to the bottom (no large white gap under) */}
-        <div
-          className={`relative order-1 min-h-[50svh] overflow-hidden sm:min-h-0 lg:order-2 lg:min-h-0 ${imageCurve}`}
-        >
-          <SmartImage
-            src={img("hero")}
-            alt=""
-            loading="eager"
-            fetchPriority="high"
-            className="absolute inset-0 size-full object-cover object-[50%_45%]"
-          />
+        {/* Image — small white gap above & below (~8px) */}
+        <div className="order-1 flex min-h-[50svh] py-8 sm:min-h-0 lg:order-2 lg:min-h-0 lg:py-8">
+          <div className={`relative min-h-0 w-full flex-1 overflow-hidden ${imageCurve}`}>
+            <SmartImage
+              src={img("hero")}
+              alt=""
+              loading="eager"
+              fetchPriority="high"
+              className="absolute inset-0 size-full object-cover object-[50%_45%]"
+            />
+          </div>
         </div>
       </div>
     </section>
