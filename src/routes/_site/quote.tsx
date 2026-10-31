@@ -20,9 +20,9 @@ export const Route = createFileRoute("/_site/quote")({
     typeof search.service === "string" && search.service ? { service: search.service } : {},
   head: () =>
     seo({
-      title: "طلب عرض سعر",
+      title: "اطلب عبر واتساب",
       description:
-        "اطلب عرض سعر لخدمات التصميم والطباعة والاستيكرات والهدايا الدعائية واللوحات من وكالة رواد الإبداع.",
+        "اختر الخدمة والعناصر المطلوبة وأرسل طلبك مباشرة عبر واتساب لوكالة رواد الإبداع.",
       path: "/quote",
       image: img("business-cards"),
     }),

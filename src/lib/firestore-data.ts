@@ -86,6 +86,28 @@ export async function loadSiteBundle(db: Firestore): Promise<SiteBundle> {
 
   const seeded = Boolean(metaSnap.exists() && metaSnap.data()?.seeded);
 
+  const gallerySyncedSlugs = new Set([
+    "commercial-printing",
+    "stickers-labels",
+    "promo-gifts",
+    "signage",
+    "displays-stands",
+    "awards-stamps",
+    "occasions",
+  ]);
+  const mergedServices = (services.length ? services : defaultServices).map((s) => {
+    if (!gallerySyncedSlugs.has(s.slug)) return s;
+    const def = defaultServices.find((d) => d.slug === s.slug);
+    if (!def) return s;
+    // Keep CMS text/settings, but always ship the latest product gallery from code.
+    return {
+      ...s,
+      image: def.image,
+      gallery: def.gallery,
+      examples: def.examples,
+    };
+  });
+
   return {
     company: companySnap.exists()
       ? ({ ...defaultCompany, ...companySnap.data() } as CompanySettings)
@@ -93,7 +115,7 @@ export async function loadSiteBundle(db: Firestore): Promise<SiteBundle> {
     website: websiteSnap.exists()
       ? ({ ...defaultWebsite, ...websiteSnap.data() } as WebsiteSettings)
       : defaultWebsite,
-    services: services.length ? services : defaultServices,
+    services: mergedServices,
     portfolio: portfolio.length ? portfolio : defaultPortfolio,
     posts: posts.length ? posts : defaultBlogPosts,
     staff: staff.length ? staff : defaultStaff,

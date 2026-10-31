@@ -27,12 +27,13 @@ export const siteConfig = {
   // Not provided by the business — intentionally empty. Do not invent.
   hoursAr: "",
   hoursEn: "",
-  // Social profiles not provided — placeholders only, shown as "coming soon".
   socials: [
-    { key: "twitter", url: "" },
-    { key: "instagram", url: "" },
-    { key: "snapchat", url: "https://snapchat.com/t/xzrXrvLv" },
+    { key: "facebook", url: "https://www.facebook.com/share/1Ex7DDtJHU/" },
+    { key: "twitter", url: "https://x.com/rowadelebda3" },
+    { key: "instagram", url: "https://www.instagram.com/rowadelebda3" },
+    { key: "youtube", url: "https://youtube.com/@rowadelebda3" },
     { key: "tiktok", url: "https://www.tiktok.com/@rowadelebda3" },
+    { key: "snapchat", url: "https://snapchat.com/t/xzrXrvLv" },
   ],
   // Prototype-only mock admin credentials. NOT secure authentication.
   demoAdmin: {

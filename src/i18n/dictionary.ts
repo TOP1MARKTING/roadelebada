@@ -2,7 +2,7 @@ export const dict: Record<string, { ar: string; en: string }> = {
   // ---------- Common ----------
   "common.learnMore": { ar: "اعرف المزيد", en: "Learn more" },
   "common.viewAll": { ar: "عرض الكل", en: "View all" },
-  "common.requestQuote": { ar: "اطلب عرض سعر", en: "Request a quote" },
+  "common.requestQuote": { ar: "اطلب عبر واتساب", en: "Order via WhatsApp" },
   "common.contactUs": { ar: "تواصل معنا", en: "Contact us" },
   "common.whatsapp": { ar: "واتساب", en: "WhatsApp" },
   "common.send": { ar: "إرسال", en: "Send" },
@@ -25,7 +25,7 @@ export const dict: Record<string, { ar: string; en: string }> = {
   "nav.portfolio": { ar: "أعمالنا", en: "Portfolio" },
   "nav.blog": { ar: "المدونة", en: "Blog" },
   "nav.contact": { ar: "تواصل معنا", en: "Contact Us" },
-  "nav.quote": { ar: "اطلب عرض سعر", en: "Request a Quote" },
+  "nav.quote": { ar: "اطلب عبر واتساب", en: "Order via WhatsApp" },
 
   // ---------- Hero ----------
   "hero.label": {
@@ -41,7 +41,7 @@ export const dict: Record<string, { ar: string; en: string }> = {
     en: "From cards, stickers, cups and T-shirts to signs, stands, awards and stamps.",
   },
   "hero.cta1": { ar: "استكشف خدماتنا", en: "Explore our services" },
-  "hero.cta2": { ar: "اطلب عرض سعر", en: "Request a quote" },
+  "hero.cta2": { ar: "اطلب عبر واتساب", en: "Order via WhatsApp" },
   "hero.slidesLabel": { ar: "صور المنتجات", en: "Product slides" },
   "hero.slideN": { ar: "صورة {n}", en: "Slide {n}" },
   "hero.f1": { ar: "إبداع في التصميم", en: "Creative design" },
@@ -158,10 +158,10 @@ export const dict: Record<string, { ar: string; en: string }> = {
     ar: "يسعدنا الإجابة عن استفساراتك ومناقشة احتياجك الإعلاني.",
     en: "We're happy to answer your questions and discuss your advertising needs.",
   },
-  "page.quoteTitle": { ar: "طلب عرض سعر", en: "Request a Quote" },
+  "page.quoteTitle": { ar: "اطلب عبر واتساب", en: "Order via WhatsApp" },
   "page.quoteDesc": {
-    ar: "املأ النموذج وسنعود إليك بعرض سعر واضح يناسب احتياجك.",
-    en: "Fill in the form and we'll get back to you with a clear quote for your needs.",
+    ar: "اختر الخدمة ثم العناصر التي تحتاجها، ونرسل طلبك مباشرة إلى واتساب.",
+    en: "Pick a service and the items you need, then send your request straight to WhatsApp.",
   },
   "page.privacyTitle": { ar: "سياسة الخصوصية", en: "Privacy Policy" },
   "page.privacyDesc": {
@@ -182,7 +182,7 @@ export const dict: Record<string, { ar: string; en: string }> = {
   "svc.examplesTitle": { ar: "ما تشمله الخدمة", en: "What the service includes" },
   "svcDetail.benefitsTitle": { ar: "فوائد الخدمة", en: "Service benefits" },
   "svcDetail.relatedTitle": { ar: "خدمات ذات صلة", en: "Related services" },
-  "svcDetail.cta": { ar: "اطلب عرض سعر لهذه الخدمة", en: "Request a quote for this service" },
+  "svcDetail.cta": { ar: "اطلب هذه الخدمة عبر واتساب", en: "Order this service via WhatsApp" },
   "svcDetail.otherServices": { ar: "خدمات أخرى", en: "Other services" },
 
   // ---------- Portfolio ----------
@@ -754,27 +754,55 @@ export const dict: Record<string, { ar: string; en: string }> = {
   },
   "quote.kicker": { ar: "خطوات بسيطة", en: "Simple steps" },
   "quote.heroAlt": { ar: "مكتب تصميم بعينات ألوان", en: "A design desk with color samples" },
-  "quote.step1": { ar: "أرسل التفاصيل", en: "Send the details" },
+  "quote.step1": { ar: "اختر الخدمة", en: "Choose a service" },
   "quote.step1d": {
-    ar: "املأ النموذج بمعلومات مشروعك.",
-    en: "Fill in the form with your project info.",
+    ar: "مثل المطبوعات التجارية أو الاستيكرات أو الهدايا.",
+    en: "Such as commercial printing, stickers or gifts.",
   },
-  "quote.step2": { ar: "نراجع طلبك", en: "We review your request" },
+  "quote.step2": { ar: "حدّد العناصر", en: "Pick the items" },
   "quote.step2d": {
-    ar: "ندرس احتياجك ونتواصل معك للاستيضاح.",
-    en: "We study your needs and contact you for clarification.",
+    ar: "اختر ما تحتاجه من قائمة الخدمة.",
+    en: "Select what you need from the service list.",
   },
-  "quote.step3": { ar: "تستلم العرض", en: "Receive your quote" },
+  "quote.step3": { ar: "أرسِل على واتساب", en: "Send on WhatsApp" },
   "quote.step3d": {
-    ar: "نرسل لك عرض سعر واضحًا ومفصلًا.",
-    en: "We send you a clear, detailed quote.",
+    ar: "نصلّك مباشرة ونكمّل التفاصيل معك.",
+    en: "We reply directly and finish the details with you.",
   },
-  "quote.nextTitle": { ar: "ماذا يحدث بعد الإرسال؟", en: "What happens next?" },
+  "quote.nextTitle": { ar: "كيف يعمل الطلب؟", en: "How does it work?" },
   "quote.preferTalk": { ar: "تفضّل الحديث مباشرة؟", en: "Prefer to talk directly?" },
   "quote.preferTalkDesc": {
     ar: "تواصل معنا هاتفيًا أو عبر واتساب وسنساعدك في تحديد احتياجك.",
     en: "Reach us by phone or WhatsApp and we'll help you define your needs.",
   },
+  "quote.pickService": { ar: "اختر الخدمة", en: "Choose a service" },
+  "quote.pickServiceHint": {
+    ar: "اضغط على الخدمة التي تحتاجها، ثم اختر العناصر من قائمتها.",
+    en: "Tap the service you need, then pick items from its list.",
+  },
+  "quote.pickItems": { ar: "اختر ما تحتاجه", en: "Choose what you need" },
+  "quote.pickItemsHint": {
+    ar: "يمكنك اختيار أكثر من عنصر، ثم إرسال الطلب على واتساب.",
+    en: "You can select more than one item, then send the request on WhatsApp.",
+  },
+  "quote.changeService": { ar: "تغيير الخدمة", en: "Change service" },
+  "quote.waNoteLabel": { ar: "ملاحظة إضافية (اختياري)", en: "Extra note (optional)" },
+  "quote.waNotePlaceholder": {
+    ar: "مثال: الكمية، المقاس، الموعد المناسب…",
+    en: "e.g. quantity, size, preferred timing…",
+  },
+  "quote.sendWhatsApp": { ar: "إرسال الطلب عبر واتساب", en: "Send request via WhatsApp" },
+  "quote.selectAtLeastOne": {
+    ar: "اختر عنصرًا واحدًا على الأقل للمتابعة.",
+    en: "Select at least one item to continue.",
+  },
+  "quote.waIntro": {
+    ar: "السلام عليكم، أرغب في طلب التالي من وكالة رواد الإبداع:",
+    en: "Hello, I'd like to request the following from Creative Pioneers:",
+  },
+  "quote.waService": { ar: "الخدمة", en: "Service" },
+  "quote.waItems": { ar: "العناصر", en: "Items" },
+  "quote.waNote": { ar: "ملاحظة", en: "Note" },
 
   // ---------- Forms ----------
   "form.nameShort": {

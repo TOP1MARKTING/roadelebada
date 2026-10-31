@@ -61,6 +61,7 @@ function ServiceDetailPage() {
   const benefits = service.benefits[lang].length ? service.benefits[lang] : service.benefits.ar;
   const gallery = service.gallery.length ? service.gallery : [service.image];
   const waMessage = t("services.waMessage", { service: bi(service.title) });
+  const galleryItems = gallery.length ? gallery : [service.image];
 
   return (
     <>
@@ -89,107 +90,164 @@ function ServiceDetailPage() {
         </div>
       </PageHero>
 
-      <section className="py-16 sm:py-20">
-        <div className="container-x grid gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="space-y-6 lg:col-span-8">
-            <Reveal className="rounded-3xl border bg-card p-6 shadow-soft sm:p-8">
-              <div className="flex items-center gap-3">
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong">
-                  <Icon className="size-5" />
-                </span>
-                <h2 className="text-xl font-extrabold text-navy sm:text-2xl">
-                  {t("services.aboutService")}
-                </h2>
+      <section className="relative overflow-hidden py-14 sm:py-20">
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 bg-gold-soft/40"
+          aria-hidden
+        />
+        <div className="container-x space-y-14 sm:space-y-16">
+          {(galleryItems.length > 0 || examples.length > 0) && (
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold tracking-[0.18em] text-gold-strong uppercase">
+                    {String(galleryItems.length).padStart(2, "0")}
+                  </p>
+                  <h2 className="mt-2 text-2xl font-extrabold text-navy sm:text-3xl">
+                    {t("svc.examplesTitle")}
+                  </h2>
+                </div>
+                <p className="max-w-sm text-sm leading-6 text-muted-foreground">
+                  {t("services.visualNote")}
+                </p>
               </div>
-              <p className="mt-5 text-[1.05rem] leading-8 text-foreground/85">
-                {bi(service.detail) || bi(service.short)}
-              </p>
 
-              {examples.length > 0 && (
-                <>
-                  <h3 className="mt-8 font-bold text-navy">{t("svc.examplesTitle")}</h3>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {examples.map((ex) => (
-                      <li
-                        key={ex}
-                        className="rounded-full border bg-background px-4 py-2 text-sm font-medium text-navy"
-                      >
-                        {ex.replace(/\.$/, "")}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-
-              {benefits.length > 0 && (
-                <>
-                  <h3 className="mt-8 font-bold text-navy">{t("svcDetail.benefitsTitle")}</h3>
-                  <ul className="mt-3 grid gap-3 sm:grid-cols-2">
-                    {benefits.slice(0, 4).map((b) => (
-                      <li key={b} className="flex items-start gap-2.5 text-[0.95rem] leading-7">
-                        <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold text-white">
-                          <Check className="size-3" />
-                        </span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </Reveal>
-
-            {gallery.length > 0 && (
-              <Reveal>
-                <div className="grid grid-cols-3 gap-3">
-                  {gallery.slice(0, 3).map((g, i) => (
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                {galleryItems.map((g, i) => {
+                  const label =
+                    examples[i]?.replace(/\.$/, "") || `${t("services.sample")} ${i + 1}`;
+                  const featured = i === 0 || i === 5;
+                  return (
                     <button
                       key={`${g}-${i}`}
                       type="button"
                       onClick={() => setZoom(g)}
-                      className="group relative overflow-hidden rounded-2xl bg-navy"
-                      aria-label={`${t("pf.zoom")} ${i + 1}`}
+                      className={`group relative overflow-hidden rounded-[1.35rem] bg-navy text-start shadow-soft transition duration-500 hover:-translate-y-1 hover:shadow-lift ${
+                        featured ? "sm:col-span-2 sm:row-span-2" : ""
+                      }`}
+                      aria-label={`${t("pf.zoom")} — ${label}`}
+                      style={{ transitionDelay: `${Math.min(i, 7) * 40}ms` }}
                     >
                       <SmartImage
                         src={g}
-                        alt={`${bi(service.title)} — ${t("services.sample")} ${i + 1}`}
-                        className="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105"
+                        alt={label}
+                        className={`w-full object-cover transition duration-700 group-hover:scale-[1.06] ${
+                          featured ? "aspect-[4/3] sm:aspect-square" : "aspect-square"
+                        }`}
                       />
-                      <span className="absolute end-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/90 text-navy opacity-0 shadow transition group-hover:opacity-100">
+                      <span className="absolute inset-0 bg-gradient-to-t from-dark/85 via-dark/15 to-transparent opacity-90 transition group-hover:opacity-100" />
+                      <span className="absolute start-3 top-3 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-wide text-white backdrop-blur-md">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="absolute end-3 top-3 flex size-9 items-center justify-center rounded-full bg-white/90 text-navy opacity-0 shadow transition duration-300 group-hover:opacity-100">
                         <Expand className="size-4" />
                       </span>
+                      <span className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                        <span className="block text-sm font-bold text-white sm:text-base">
+                          {label}
+                        </span>
+                      </span>
                     </button>
-                  ))}
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground">{t("services.visualNote")}</p>
-              </Reveal>
-            )}
-          </div>
+                  );
+                })}
+              </div>
 
-          <aside className="lg:col-span-4">
-            <div className="rounded-3xl bg-navy p-6 text-white shadow-lift lg:sticky lg:top-32 sm:p-7">
-              <h2 className="text-xl font-extrabold">{t("services.sidebarTitle")}</h2>
-              <p className="mt-2 text-sm leading-7 text-white/70">{t("services.sidebarDesc")}</p>
-              <div className="mt-6 grid gap-3">
-                <Link to="/quote" search={{ service: service.slug }} className="btn btn-gold w-full">
-                  {t("svcDetail.cta")}
-                  <Arrow className="size-4" />
-                </Link>
-                <a
-                  href={company.wa(waMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline-light w-full"
-                >
-                  <WhatsAppIcon className="size-4" />
-                  {t("contact.whatsappBtn")}
-                </a>
-                <a href={company.tel} className="btn btn-outline-light w-full">
-                  <Phone className="size-4" />
-                  <span dir="ltr">{formatPhoneDisplay(company.phone)}</span>
-                </a>
+              {examples.length > galleryItems.length && (
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {examples.slice(galleryItems.length).map((ex) => (
+                    <li
+                      key={ex}
+                      className="rounded-full border bg-background px-4 py-2 text-sm font-medium text-navy"
+                    >
+                      {ex.replace(/\.$/, "")}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Reveal>
+          )}
+
+          <Reveal>
+            <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+              <div className="lg:col-span-7">
+                <div className="flex items-center gap-3">
+                  <span className="flex size-12 items-center justify-center rounded-2xl bg-gold-soft text-gold-strong">
+                    <Icon className="size-5" />
+                  </span>
+                  <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
+                    {t("services.aboutService")}
+                  </h2>
+                </div>
+                <p className="mt-5 max-w-2xl text-[1.08rem] leading-9 text-foreground/80">
+                  {bi(service.detail) || bi(service.short)}
+                </p>
+              </div>
+
+              {benefits.length > 0 && (
+                <div className="lg:col-span-5">
+                  <h3 className="text-sm font-bold tracking-[0.14em] text-gold-strong uppercase">
+                    {t("svcDetail.benefitsTitle")}
+                  </h3>
+                  <ul className="mt-4 grid gap-3">
+                    {benefits.slice(0, 4).map((b, i) => (
+                      <li
+                        key={b}
+                        className="flex items-start gap-3 rounded-2xl border border-border/70 bg-card/80 px-4 py-3.5 backdrop-blur-sm transition hover:border-gold/50"
+                        style={{ transitionDelay: `${i * 50}ms` }}
+                      >
+                        <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold text-white">
+                          <Check className="size-3.5" />
+                        </span>
+                        <span className="text-[0.95rem] leading-7 text-navy">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-navy px-6 py-8 text-white shadow-lift sm:px-10 sm:py-10">
+              <div
+                className="pointer-events-none absolute -start-16 top-0 size-56 rounded-full bg-gold/20 blur-3xl"
+                aria-hidden
+              />
+              <div
+                className="pointer-events-none absolute -end-10 bottom-0 size-48 rounded-full bg-orange-500/15 blur-3xl"
+                aria-hidden
+              />
+              <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+                <div>
+                  <h2 className="text-2xl font-extrabold sm:text-3xl">{t("services.sidebarTitle")}</h2>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-white/70 sm:text-base">
+                    {t("services.sidebarDesc")}
+                  </p>
+                </div>
+                <div className="grid gap-3">
+                  <Link to="/quote" search={{ service: service.slug }} className="btn btn-gold w-full">
+                    {t("svcDetail.cta")}
+                    <Arrow className="size-4" />
+                  </Link>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <a
+                      href={company.wa(waMessage)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline-light w-full"
+                    >
+                      <WhatsAppIcon className="size-4" />
+                      {t("contact.whatsappBtn")}
+                    </a>
+                    <a href={company.tel} className="btn btn-outline-light w-full">
+                      <Phone className="size-4" />
+                      <span dir="ltr">{formatPhoneDisplay(company.phone)}</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </aside>
+          </Reveal>
         </div>
       </section>
 
@@ -218,14 +276,16 @@ function ServiceDetailPage() {
         </section>
       )}
 
-      <Modal open={!!zoom} onClose={() => setZoom(null)} size="xl" title={bi(service.title)}>
+      <Modal open={!!zoom} onClose={() => setZoom(null)} size="sm" title={bi(service.title)}>
         {zoom && (
-          <SmartImage
-            src={zoom}
-            alt={bi(service.title)}
-            loading="eager"
-            className="w-full rounded-xl object-contain"
-          />
+          <div className="flex items-center justify-center">
+            <SmartImage
+              src={zoom}
+              alt={bi(service.title)}
+              loading="eager"
+              className="max-h-[55vh] w-auto max-w-full rounded-xl object-contain"
+            />
+          </div>
         )}
       </Modal>
     </>

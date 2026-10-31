@@ -73,8 +73,17 @@ const seeds: ServiceSeed[] = [
   {
     slug: "commercial-printing",
     iconKey: "printer",
-    image: assetToken("cat-print"),
-    gallery: [assetToken("business-cards"), assetToken("pf-cards"), assetToken("printing-press")],
+    image: assetToken("print-business-cards"),
+    gallery: [
+      assetToken("print-personal-cards"),
+      assetToken("print-business-cards"),
+      assetToken("print-table-cards"),
+      assetToken("print-brochures"),
+      assetToken("print-folders"),
+      assetToken("print-menus"),
+      assetToken("print-door-hangers"),
+      assetToken("print-certificates"),
+    ],
     category: "print",
     title: { ar: "المطبوعات التجارية", en: "Commercial Printing" },
     short: {
@@ -125,8 +134,14 @@ const seeds: ServiceSeed[] = [
   {
     slug: "stickers-labels",
     iconKey: "sticker",
-    image: assetToken("cat-stickers"),
-    gallery: [assetToken("svc-stickers"), assetToken("packaging"), assetToken("pf-packaging")],
+    image: assetToken("sticker-products"),
+    gallery: [
+      assetToken("sticker-products"),
+      assetToken("sticker-printing"),
+      assetToken("sticker-boxes"),
+      assetToken("sticker-labels-cut"),
+      assetToken("sticker-car"),
+    ],
     category: "packaging",
     title: { ar: "الاستيكرات والملصقات", en: "Stickers & Labels" },
     short: {
@@ -171,8 +186,19 @@ const seeds: ServiceSeed[] = [
   {
     slug: "promo-gifts",
     iconKey: "gift",
-    image: assetToken("cat-gifts"),
-    gallery: [assetToken("packaging"), assetToken("svc-branding"), assetToken("pf-packaging")],
+    image: assetToken("gift-paper-bags"),
+    gallery: [
+      assetToken("gift-paper-bags"),
+      assetToken("gift-totes"),
+      assetToken("gift-paper-cups"),
+      assetToken("gift-plastic-cups"),
+      assetToken("gift-mugs"),
+      assetToken("gift-pens"),
+      assetToken("gift-tshirts"),
+      assetToken("gift-caps"),
+      assetToken("gift-sportswear"),
+      assetToken("gift-nametags"),
+    ],
     category: "gifts",
     title: { ar: "الهدايا والتغليف", en: "Gifts & Packaging" },
     short: {
@@ -227,11 +253,14 @@ const seeds: ServiceSeed[] = [
   {
     slug: "signage",
     iconKey: "signpost",
-    image: assetToken("cat-signage"),
+    image: assetToken("sign-steel-letters"),
     gallery: [
-      assetToken("svc-signage"),
-      assetToken("storefront-sign"),
-      assetToken("about-signage"),
+      assetToken("sign-wayfinding"),
+      assetToken("sign-forex"),
+      assetToken("sign-foam"),
+      assetToken("sign-foam-print"),
+      assetToken("sign-steel-letters"),
+      assetToken("sign-illuminated"),
     ],
     category: "signage",
     title: { ar: "اللوحات والحروف", en: "Signs & Letters" },
@@ -279,8 +308,15 @@ const seeds: ServiceSeed[] = [
   {
     slug: "displays-stands",
     iconKey: "presentation",
-    image: assetToken("cat-displays"),
-    gallery: [assetToken("svc-ads"), assetToken("large-format"), assetToken("pf-banner")],
+    image: assetToken("display-rollup"),
+    gallery: [
+      assetToken("display-rollup"),
+      assetToken("display-xbanner"),
+      assetToken("display-popup"),
+      assetToken("display-flags"),
+      assetToken("display-table"),
+      assetToken("display-curtains"),
+    ],
     category: "displays",
     title: { ar: "الاستاندات والعرض", en: "Stands & Displays" },
     short: {
@@ -327,8 +363,15 @@ const seeds: ServiceSeed[] = [
   {
     slug: "occasions",
     iconKey: "party",
-    image: assetToken("cat-occasions"),
-    gallery: [assetToken("cat-occasions"), assetToken("pf-cards"), assetToken("business-cards")],
+    image: assetToken("occasion-cards"),
+    gallery: [
+      assetToken("occasion-cards"),
+      assetToken("occasion-invitations"),
+      assetToken("occasion-newborn"),
+      assetToken("occasion-graduation"),
+      assetToken("occasion-school"),
+      assetToken("occasion-bottle-tags"),
+    ],
     category: "occasions",
     title: { ar: "المناسبات والأفراح", en: "Occasions" },
     short: {
@@ -375,8 +418,13 @@ const seeds: ServiceSeed[] = [
   {
     slug: "awards-stamps",
     iconKey: "award",
-    image: assetToken("cat-awards"),
-    gallery: [assetToken("cat-awards"), assetToken("studio-press"), assetToken("about-designer")],
+    image: assetToken("award-shield"),
+    gallery: [
+      assetToken("award-shield"),
+      assetToken("award-laser"),
+      assetToken("award-desk-plate"),
+      assetToken("award-stamps"),
+    ],
     category: "awards",
     title: { ar: "الدروع والأختام", en: "Awards & Stamps" },
     short: {

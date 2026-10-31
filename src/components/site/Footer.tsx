@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { LockKeyhole, MapPin, Phone } from "lucide-react";
+import { ExternalLink, MapPin, Phone } from "lucide-react";
 import { useLang } from "@/i18n";
 import { formatPhoneDisplay, siteConfig } from "@/config/site";
 import { useAppData, useCompany, visibleServices } from "@/store/app-data";
-import top1Badge from "@/assets/top1markting-badge.png";
+import top1Logo from "@/assets/top1markting-logo.png";
 import { Logo } from "./Logo";
 import { SocialIcon, WhatsAppIcon, socialLabels } from "./SocialIcon";
 
@@ -124,10 +124,10 @@ export function Footer() {
           </ul>
         </nav>
 
-        <div className="hidden lg:col-span-3 md:block">
+        <div className="lg:col-span-3">
           <h2 className="text-sm font-bold text-white">{t("footer.contactInfo")}</h2>
           <ul className="mt-5 space-y-4 text-sm">
-            <li>
+            <li className="hidden sm:block">
               <a href={company.tel} className="flex items-center gap-3 transition hover:text-gold">
                 <Phone className="size-4 shrink-0 text-gold" />
                 <span dir="ltr">{formatPhoneDisplay(company.phone)}</span>
@@ -142,53 +142,48 @@ export function Footer() {
                 </span>
               </span>
             </li>
-            <li>
-              <a
-                href={company.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gold underline-offset-4 hover:underline"
+            <li className="pt-1 text-xs leading-6 text-white/50">
+              <Link
+                to="/admin/login"
+                aria-label={t("footer.adminAccess")}
+                title={t("footer.adminAccess")}
+                className="inline transition hover:text-gold"
               >
-                {t("contact.mapsBtn")}
-              </a>
+                ©
+              </Link>{" "}
+              {year} {name}. {t("footer.rights")}.
+            </li>
+            <li>
+              <Link to="/privacy" className="text-xs transition hover:text-gold">
+                {t("page.privacyTitle")}
+              </Link>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="relative border-t border-white/10">
-        <div className="container-x flex flex-col items-stretch justify-between gap-4 py-4 text-center text-xs text-white/50 sm:flex-row sm:items-center sm:py-5 sm:text-start">
-          <p className="w-full sm:w-auto">
-            © {year} {name}. {t("footer.rights")}.
-          </p>
-          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:justify-end sm:gap-5">
-            <a
-              href="https://www.top1markting.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Top1Markting — تنفيذ"
-              className="inline-block transition hover:-translate-y-0.5 hover:opacity-95"
-            >
-              <img
-                src={top1Badge}
-                alt="تنفيذ Top1Markting"
-                className="h-10 w-auto max-w-[min(100%,18rem)] object-contain object-center drop-shadow-[0_4px_14px_rgb(0_0_0/0.35)] sm:h-11"
-              />
-            </a>
-            <div className="flex items-center gap-5">
-              <Link to="/privacy" className="transition hover:text-gold">
-                {t("page.privacyTitle")}
-              </Link>
-              <Link
-                to="/admin/login"
-                aria-label={t("footer.adminAccess")}
-                title={t("footer.adminAccess")}
-                className="flex size-8 items-center justify-center rounded text-white/25 transition hover:bg-white/5 hover:text-gold"
-              >
-                <LockKeyhole className="size-3.5" />
-              </Link>
-            </div>
-          </div>
+        <div className="container-x flex justify-center py-5">
+          <a
+            href="https://www.top1markting.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            dir="ltr"
+            aria-label="Top1Markting — تنفيذ"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-3.5 py-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.4)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgb(0_0_0/0.5)]"
+          >
+            <ExternalLink className="size-3.5 shrink-0 text-[#0A1F4D]" strokeWidth={2.5} />
+            <span className="text-[0.8rem] font-bold tracking-tight text-[#0A1F4D]">
+              Top<span className="text-[#E5B41F]">1</span>Markting
+            </span>
+            <span className="text-[0.8rem] font-extrabold text-[#E5B41F]">تنفيذ</span>
+            <img
+              src={top1Logo}
+              alt=""
+              aria-hidden
+              className="h-7 w-auto shrink-0 object-contain"
+            />
+          </a>
         </div>
       </div>
     </footer>
