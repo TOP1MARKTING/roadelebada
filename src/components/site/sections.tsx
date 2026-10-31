@@ -66,13 +66,13 @@ export function AboutIntro({ withLink = true }: { withLink?: boolean }) {
             <p className="mt-2 leading-8 text-muted-foreground">{t("home.approachDesc")}</p>
           </Reveal>
           <Reveal delay={160}>
-            <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-7 grid grid-cols-2 gap-x-3 gap-y-4">
               {approach.map((a) => (
-                <li key={a} className="flex items-start gap-3 text-[0.95rem] text-foreground">
-                  <span className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold-soft text-gold-strong">
+                <li key={a} className="flex items-start gap-2 text-sm leading-6 text-foreground sm:gap-3 sm:text-[0.95rem] sm:leading-7">
+                  <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold-soft text-gold-strong">
                     <Check className="size-3.5" />
                   </span>
-                  {a}
+                  <span>{a}</span>
                 </li>
               ))}
             </ul>
@@ -317,47 +317,71 @@ export function CategoryCircles({
     ro.observe(el);
     phoneMq.addEventListener("change", measure);
 
+    let raf = 0;
+    let cancelled = false;
     let paused = false;
     let resumeTimer = 0;
     let direction = 1;
     let holdUntil = 0;
-    /** 1px every 280ms ≈ 3.5 px/sec */
-    const STEP = 1;
-    const TICK_MS = 280;
+    let lastTs = 0;
+    /** Continuous glide — ~22 px/sec feels calm but not sticky */
+    const PX_PER_SEC = 22;
+    let pos = Math.min(Math.abs(el.scrollLeft), Math.max(0, el.scrollWidth - el.clientWidth));
+
+    const syncPos = () => {
+      pos = Math.min(Math.abs(el.scrollLeft), Math.max(0, el.scrollWidth - el.clientWidth));
+    };
 
     const pause = () => {
       paused = true;
+      syncPos();
       window.clearTimeout(resumeTimer);
       resumeTimer = window.setTimeout(() => {
+        syncPos();
         paused = false;
+        lastTs = 0;
       }, 4500);
     };
 
-    const tick = () => {
-      if (!phoneMq.matches || reducedMq.matches || paused) return;
-      if (Date.now() < holdUntil) return;
-      const max = el.scrollWidth - el.clientWidth;
-      if (max <= 8) return;
+    const frame = (now: number) => {
+      if (cancelled) return;
 
-      const before = el.scrollLeft;
-      el.scrollBy({ left: (isRtl ? -STEP : STEP) * direction });
-      const moved = el.scrollLeft !== before;
-      const atEnd = Math.abs(el.scrollLeft) >= max - 1;
-      const atStart = Math.abs(el.scrollLeft) <= 1;
-      if (!moved || atEnd || atStart) {
-        if (atEnd || (!moved && direction === 1)) direction = -1;
-        else if (atStart || (!moved && direction === -1)) direction = 1;
-        holdUntil = Date.now() + 2000;
+      if (phoneMq.matches && !reducedMq.matches && !paused && now >= holdUntil) {
+        const max = el.scrollWidth - el.clientWidth;
+        if (max > 8) {
+          const dt = lastTs ? Math.min((now - lastTs) / 1000, 0.05) : 1 / 60;
+          lastTs = now;
+          pos += direction * PX_PER_SEC * dt;
+
+          if (pos >= max) {
+            pos = max;
+            direction = -1;
+            holdUntil = now + 1400;
+            lastTs = 0;
+          } else if (pos <= 0) {
+            pos = 0;
+            direction = 1;
+            holdUntil = now + 1400;
+            lastTs = 0;
+          }
+
+          el.scrollLeft = isRtl ? -pos : pos;
+        }
+      } else {
+        lastTs = 0;
       }
+
+      raf = requestAnimationFrame(frame);
     };
 
-    const interval = window.setInterval(tick, TICK_MS);
+    raf = requestAnimationFrame(frame);
     el.addEventListener("pointerdown", pause, { passive: true });
     el.addEventListener("wheel", pause, { passive: true });
     el.addEventListener("touchstart", pause, { passive: true });
 
     return () => {
-      window.clearInterval(interval);
+      cancelled = true;
+      cancelAnimationFrame(raf);
       window.clearTimeout(resumeTimer);
       ro.disconnect();
       phoneMq.removeEventListener("change", measure);
