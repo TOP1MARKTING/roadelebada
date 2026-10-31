@@ -1,0 +1,10 @@
+---
+description: GitHub account used for this project and related repos
+alwaysApply: true
+---
+
+# GitHub account
+
+- The user signs in and pushes with the **TOP1MARKTING** GitHub account.
+- Default remotes/org for this work: `TOP1MARKTING` (e.g. `https://github.com/TOP1MARKTING/roadelebada`).
+- When authenticating `gh` / git push, use or expect the **TOP1MARKTING** account — do not switch to a different GitHub user unless the user explicitly asks.
